@@ -4,6 +4,7 @@ import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.GameView;
+import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
@@ -17,11 +18,15 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import com.almasb.fxgl.app.scene.FXGLMenu;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,13 +54,19 @@ public class TowerDefenseApp extends GameApplication {
         settings.setIntroEnabled(false);
         settings.setProfilingEnabled(false);
         settings.setCloseConfirmation(false);
+        settings.setMainMenuEnabled(true);
         settings.setApplicationMode(ApplicationMode.DEVELOPER);
+        settings.setSceneFactory(new SceneFactory() {
+            @Override
+            public FXGLMenu newMainMenu() {
+                return new MainMenu();
+            }
+        });
     }
 
     @Override
     protected void initInput() {
         Input input = getInput();
-
         input.addAction(new UserAction("Place Tower") {
             private Rectangle2D worldBounds = new Rectangle2D(0, 0, getAppWidth(), getAppHeight() - 100 - 40);
 
@@ -76,7 +87,6 @@ public class TowerDefenseApp extends GameApplication {
     @Override
     protected void initGame() {
         getGameWorld().addEntityFactory(new TowerDefenseFactory());
-
         // TODO: read this from external level data
         waypoints.addAll(Arrays.asList(
                 new Point2D(700, 0),
@@ -85,12 +95,9 @@ public class TowerDefenseApp extends GameApplication {
                 new Point2D(50, 450),
                 new Point2D(700, 500)
         ));
-
         BooleanProperty enemiesLeft = new SimpleBooleanProperty();
         enemiesLeft.bind(getip("numEnemies").greaterThan(0));
-
         getGameTimer().runAtIntervalWhile(this::spawnEnemy, Duration.seconds(1), enemiesLeft);
-
         getEventBus().addEventHandler(EnemyKilledEvent.ANY, this::onEnemyKilled);
         getEventBus().addEventHandler(EnemyReachedGoalEvent.ANY, e -> gameOver(false));
     }
