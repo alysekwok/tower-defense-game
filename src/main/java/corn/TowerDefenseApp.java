@@ -14,6 +14,7 @@ import corn.collision.BulletEnemyHandler;
 import corn.event.EnemyKilledEvent;
 import corn.event.EnemyReachedGoalEvent;
 import corn.tower.TowerIcon;
+import corn.tower.TowerType;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Point2D;
@@ -27,6 +28,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import com.almasb.fxgl.app.scene.FXGLMenu;
+import com.almasb.fxgl.dsl.FXGL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -100,6 +102,15 @@ public class TowerDefenseApp extends GameApplication {
         getGameTimer().runAtIntervalWhile(this::spawnEnemy, Duration.seconds(1), enemiesLeft);
         getEventBus().addEventHandler(EnemyKilledEvent.ANY, this::onEnemyKilled);
         getEventBus().addEventHandler(EnemyReachedGoalEvent.ANY, e -> gameOver(false));
+
+        /*
+        FXGL.entityBuilder()
+                .type(TowerDefenseType.MONUMENT)
+                .at(520, 420)
+                .view("farmer.png")
+                .buildAndAttach();
+
+         */
     }
 
     @Override
@@ -108,8 +119,9 @@ public class TowerDefenseApp extends GameApplication {
     }
 
     // TODO: this should be tower data
-    private Color selectedColor = Color.BLACK;
+    // private Color selectedColor = Color.BLACK;
     private int selectedIndex = 1;
+    private TowerType selectedType;
 
     @Override
     protected void initUI() {
@@ -121,14 +133,24 @@ public class TowerDefenseApp extends GameApplication {
         for (int i = 0; i < 4; i++) {
             int index = i + 1;
 
+
             Color color = FXGLMath.randomColor();
+            TowerType[] towerTypes = {TowerType.FARMER, TowerType.COW, TowerType.NINJA, TowerType.BOMBER};
+            TowerType type = towerTypes[i];
             TowerIcon icon = new TowerIcon(color);
             icon.setTranslateX(10 + i * 100);
             icon.setTranslateY(500);
             icon.setOnMouseClicked(e -> {
-                selectedColor = color;
+                selectedType = type;
+                // selectedColor = color;
                 selectedIndex = index;
             });
+
+            var monument = FXGL.getAssetLoader().loadTexture("cow.PNG", 70, 70);
+            monument.setTranslateX(200);
+            monument.setTranslateY(200);
+
+            FXGL.getGameScene().addUINode(monument);
 
             getGameScene().addUINode(icon);
         }
@@ -143,7 +165,8 @@ public class TowerDefenseApp extends GameApplication {
     private void placeTower() {
         spawn("Tower",
                 new SpawnData(getInput().getMouseXWorld(), getInput().getMouseYWorld())
-                        .put("color", selectedColor)
+                        //.put("color", selectedColor)
+                        .put("type", selectedType)
                         .put("index", selectedIndex)
         );
     }
