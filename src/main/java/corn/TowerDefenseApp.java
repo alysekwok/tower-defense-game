@@ -92,7 +92,7 @@ public class TowerDefenseApp extends GameApplication {
         getGameTimer().runAtIntervalWhile(this::spawnEnemy, Duration.seconds(1), enemiesLeft);
 
         getEventBus().addEventHandler(EnemyKilledEvent.ANY, this::onEnemyKilled);
-        getEventBus().addEventHandler(EnemyReachedGoalEvent.ANY, e -> gameOver());
+        getEventBus().addEventHandler(EnemyReachedGoalEvent.ANY, e -> gameOver(false));
     }
 
     @Override
@@ -145,7 +145,7 @@ public class TowerDefenseApp extends GameApplication {
         levelEnemies--;
 
         if (levelEnemies == 0) {
-            gameOver();
+            gameOver(true);
         }
 
         Entity enemy = event.getEnemy();
@@ -158,8 +158,13 @@ public class TowerDefenseApp extends GameApplication {
         getGameScene().addGameView(new GameView(xMark, 1000));
     }
 
-    private void gameOver() {
-        showMessage("Demo Over. Thanks for playing!", getGameController()::exit);
+    private void gameOver(boolean won) {
+        if (won) {
+            showMessage("Congrats! You won", getGameController()::exit);
+        } else {
+            showMessage("lol u lost", getGameController()::exit);
+        }
+
     }
 
     public static void main(String[] args) {
