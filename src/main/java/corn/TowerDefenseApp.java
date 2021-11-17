@@ -11,6 +11,7 @@ import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.level.tiled.TiledMap;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
+import com.almasb.fxgl.texture.Texture;
 import corn.collision.BulletEnemyHandler;
 import corn.event.EnemyKilledEvent;
 import corn.event.EnemyReachedGoalEvent;
@@ -30,6 +31,9 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.dsl.views.ScrollingBackgroundView;
+import javafx.geometry.HorizontalDirection;
+import javafx.geometry.Orientation;
 
 
 import java.util.*;
@@ -40,6 +44,8 @@ public class TowerDefenseApp extends GameApplication {
     private int levelEnemies = 10;
     private Point2D enemySpawnPoint = new Point2D(50, 0);
     private List<Point2D> waypoints = new ArrayList<>();
+    public static final int WIDTH = 16 * 85;
+    public static final int HEIGHT = 16 * 50;
 
     public List<Point2D> getWaypoints() {
         return new ArrayList<>(waypoints);
@@ -50,8 +56,8 @@ public class TowerDefenseApp extends GameApplication {
     protected void initSettings(GameSettings settings) {
         settings.setTitle("CornTD");
         settings.setVersion("1.0");
-        settings.setWidth(800);
-        settings.setHeight(600);
+        settings.setWidth(WIDTH);
+        settings.setHeight(HEIGHT);
         settings.setIntroEnabled(false);
         settings.setProfilingEnabled(false);
         settings.setCloseConfirmation(false);
@@ -88,8 +94,20 @@ public class TowerDefenseApp extends GameApplication {
     @Override
     protected void initGame() {
         getGameWorld().addEntityFactory(new TowerDefenseFactory());
-       // setLevelFromMap("corn-map-trial-2.tmx");
+        //getAssetLoader().loadJSON("json/map-5.json", TiledMap.class);
+        // setLevelFromMap("map-5.json");
+        // setLevelFromMap("map-5.tmx");
         // getGameWorld().setLevel(level);
+        // FXGL.setLevelFromMap("map-5.tmx");
+        Texture t = getAssetLoader().loadTexture("map-menu.png");
+
+        entityBuilder()
+                .view(new ScrollingBackgroundView(t.superTexture(t, HorizontalDirection.RIGHT),
+                        Orientation.HORIZONTAL))
+                .buildAndAttach();
+
+        getGameScene().getViewport().setBounds(0, 0, Integer.MAX_VALUE, getAppHeight());
+
 
         // TODO: read this from external level data
         waypoints.addAll(Arrays.asList(
@@ -140,17 +158,17 @@ public class TowerDefenseApp extends GameApplication {
             // TowerType[] towerTypes = {TowerType.FARMER, TowerType.COW, TowerType.NINJA, TowerType.BOMBER};
             // TowerType type = towerTypes[i];
             TowerIcon icon = new TowerIcon(color);
-            icon.setTranslateX(10 + i * 100);
-            icon.setTranslateY(500);
+            icon.setTranslateX(1150);
+            icon.setTranslateY(80 + i * 100);
             icon.setOnMouseClicked(e -> {
                 // selectedType = type;
                 selectedColor = color;
                 selectedIndex = index;
             });
 
-            var monument = FXGL.getAssetLoader().loadTexture("cow.PNG", 70, 70);
-            monument.setTranslateX(200);
-            monument.setTranslateY(200);
+            var monument = FXGL.getAssetLoader().loadTexture("cow.PNG", 130, 130);
+            monument.setTranslateX(1150);
+            monument.setTranslateY(600);
 
             FXGL.getGameScene().addUINode(monument);
 

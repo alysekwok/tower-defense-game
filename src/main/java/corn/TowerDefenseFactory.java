@@ -19,7 +19,7 @@ public class TowerDefenseFactory implements EntityFactory {
     public Entity spawnEnemy(SpawnData data) {
         return entityBuilder(data)
                 .type(TowerDefenseType.ENEMY)
-                .viewWithBBox(new Rectangle(40, 40, Color.RED))
+                .viewWithBBox(new Rectangle(30, 30, Color.RED))
                 .with(new CollidableComponent(true))
                 .with(new EnemyComponent())
                 .build();
