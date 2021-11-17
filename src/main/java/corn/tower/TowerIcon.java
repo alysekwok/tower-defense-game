@@ -7,6 +7,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class TowerIcon extends Pane {
+    private Texture cow;
+    private Texture farmer;
+    private Texture bomber;
+    private Texture ninja;
+
 
     public TowerIcon(Color color) {
         getChildren().add(new Rectangle(80, 80, color));

@@ -29,8 +29,8 @@ public class TowerDefenseFactory implements EntityFactory {
     public Entity spawnTower(SpawnData data) {
         return entityBuilder(data)
                 .type(TowerDefenseType.TOWER)
-                //.view(new Rectangle(40, 40, data.get("color")))
-                .view((String) data.get("type"))
+                .view(new Rectangle(40, 40, data.get("color")))
+                // .view((String) data.get("type"))
                 .with(new CollidableComponent(true))
                 .with(new TowerDataComponent())
                 .with(new TowerComponent())

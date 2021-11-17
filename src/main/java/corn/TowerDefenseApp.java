@@ -8,6 +8,7 @@ import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
+import com.almasb.fxgl.entity.level.tiled.TiledMap;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import corn.collision.BulletEnemyHandler;
@@ -30,10 +31,8 @@ import javafx.util.Duration;
 import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.dsl.FXGL;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
@@ -89,6 +88,9 @@ public class TowerDefenseApp extends GameApplication {
     @Override
     protected void initGame() {
         getGameWorld().addEntityFactory(new TowerDefenseFactory());
+       // setLevelFromMap("corn-map-trial-2.tmx");
+        // getGameWorld().setLevel(level);
+
         // TODO: read this from external level data
         waypoints.addAll(Arrays.asList(
                 new Point2D(700, 0),
@@ -119,30 +121,30 @@ public class TowerDefenseApp extends GameApplication {
     }
 
     // TODO: this should be tower data
-    // private Color selectedColor = Color.BLACK;
+    private Color selectedColor = Color.BLACK;
     private int selectedIndex = 1;
     private TowerType selectedType;
 
     @Override
     protected void initUI() {
-        Rectangle uiBG = new Rectangle(getAppWidth(), 100);
-        uiBG.setTranslateY(500);
+       // Rectangle uiBG = new Rectangle(getAppWidth(), 100);
+        // uiBG.setTranslateY(500);
 
-        getGameScene().addUINode(uiBG);
+        // getGameScene().addUINode(uiBG);
 
         for (int i = 0; i < 4; i++) {
             int index = i + 1;
 
 
             Color color = FXGLMath.randomColor();
-            TowerType[] towerTypes = {TowerType.FARMER, TowerType.COW, TowerType.NINJA, TowerType.BOMBER};
-            TowerType type = towerTypes[i];
+            // TowerType[] towerTypes = {TowerType.FARMER, TowerType.COW, TowerType.NINJA, TowerType.BOMBER};
+            // TowerType type = towerTypes[i];
             TowerIcon icon = new TowerIcon(color);
             icon.setTranslateX(10 + i * 100);
             icon.setTranslateY(500);
             icon.setOnMouseClicked(e -> {
-                selectedType = type;
-                // selectedColor = color;
+                // selectedType = type;
+                selectedColor = color;
                 selectedIndex = index;
             });
 
@@ -165,8 +167,8 @@ public class TowerDefenseApp extends GameApplication {
     private void placeTower() {
         spawn("Tower",
                 new SpawnData(getInput().getMouseXWorld(), getInput().getMouseYWorld())
-                        //.put("color", selectedColor)
-                        .put("type", selectedType)
+                        .put("color", selectedColor)
+                        // .put("type", selectedType)
                         .put("index", selectedIndex)
         );
     }
