@@ -87,8 +87,8 @@ public class TowerDefenseFactory implements EntityFactory {
                 .build();
     }
 
-    @Spawns("Tower")
-    public Entity spawnTower(SpawnData data) {
+    @Spawns("TowerBomber")
+    public Entity spawnTowerBomber(SpawnData data) {
         return entityBuilder(data)
                 .type(TowerDefenseType.TOWER)
                 .view(new Rectangle(40, 40, data.get("color")))
