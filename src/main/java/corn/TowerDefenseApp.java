@@ -76,7 +76,7 @@ public class TowerDefenseApp extends GameApplication {
         Input input = getInput();
         input.addAction(new UserAction("Place Tower") {
             private Rectangle2D worldBounds = new Rectangle2D(0, 0, getAppWidth(), getAppHeight() - 100 - 40);
-            private Rectangle2D mapBounds = new Rectangle2D(0, 0, 16 * 70, getAppHeight() - 100 - 40);
+            private Rectangle2D mapBounds = new Rectangle2D(0, 0, 16 * 65, getAppHeight() - 100 - 40);
             @Override
             protected void onActionBegin() {
                 if (mapBounds.contains(input.getMousePositionWorld())) {
