@@ -8,10 +8,7 @@ import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.ui.ProgressBar;
-import corn.components.EnemyComponent;
-import corn.components.enemy2;
-import corn.components.TowerComponent;
-import corn.components.enemy3;
+import corn.components.*;
 import corn.tower.TowerDataComponent;
 import corn.tower.TowerType;
 import javafx.scene.image.ImageView;
@@ -132,6 +129,26 @@ public class TowerDefenseFactory implements EntityFactory {
                 .with(new OffscreenCleanComponent())
                 .build();
     }
+
+    @Spawns("Monument")
+    public Entity spawnMonument(SpawnData data) throws FileNotFoundException {
+        var hp = new HealthIntComponent(10);
+        var hpView = new ProgressBar(false);
+        hpView.setFill(Color.LIGHTGREEN);
+        hpView.setMaxValue(10);
+        hpView.setWidth(50);
+        hpView.setTranslateY(-30);
+        hpView.setTranslateX(-25);
+        hpView.currentValueProperty().bind(hp.valueProperty());
+        return FXGL.entityBuilder(data)
+                .type(TowerDefenseType.ENEMY)
+                .with(new CollidableComponent(true))
+                .view(hpView)
+                .with(hp)
+                .with(new MonumentComponent())
+                .build();
+    }
+
 /*
     @Spawns("TowerBomber")
     public Entity spawnTowerBomber(SpawnData data) throws FileNotFoundException {

@@ -118,8 +118,10 @@ public class TowerDefenseApp extends GameApplication {
                 new Point2D(130, 710),
                 new Point2D(900, 710)
         ));
+
         BooleanProperty enemiesLeft = new SimpleBooleanProperty();
         enemiesLeft.bind(getip("numEnemies").greaterThan(0));
+        spawnMonument();
         getGameTimer().runAtIntervalWhile(this::spawnEnemy, Duration.seconds(1), enemiesLeft);
         getGameTimer().runAtIntervalWhile(this::spawnEnemy2, Duration.seconds(3), enemiesLeft);
         getGameTimer().runAtIntervalWhile(this::spawnEnemy3, Duration.seconds(2), enemiesLeft);
@@ -194,6 +196,10 @@ public class TowerDefenseApp extends GameApplication {
     private void spawnEnemy3() {
         inc("numEnemies", -1);
         spawn("Enemy3", enemySpawnPoint.getX(), enemySpawnPoint.getY());
+    }
+
+    private void spawnMonument() {
+        spawn("Monument", 990, 650);
     }
 
     private void placeTower() {
