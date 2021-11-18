@@ -76,10 +76,10 @@ public class TowerDefenseApp extends GameApplication {
         Input input = getInput();
         input.addAction(new UserAction("Place Tower") {
             private Rectangle2D worldBounds = new Rectangle2D(0, 0, getAppWidth(), getAppHeight() - 100 - 40);
-
+            private Rectangle2D mapBounds = new Rectangle2D(0, 0, 16 * 70, getAppHeight() - 100 - 40);
             @Override
             protected void onActionBegin() {
-                if (worldBounds.contains(input.getMousePositionWorld())) {
+                if (mapBounds.contains(input.getMousePositionWorld())) {
                     placeTower();
                 }
             }
@@ -89,7 +89,7 @@ public class TowerDefenseApp extends GameApplication {
     @Override
     protected void initGameVars(Map<String, Object> vars) {
         vars.put("numEnemies", levelEnemies);
-        vars.put("money", 10);
+        vars.put("money", 100);
     }
 
     @Override
@@ -221,7 +221,6 @@ public class TowerDefenseApp extends GameApplication {
                             .put("index", selectedIndex)
             );
         }
-
     }
 
     private void onEnemyKilled(EnemyKilledEvent event) {

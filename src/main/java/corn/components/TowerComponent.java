@@ -23,13 +23,13 @@ public class TowerComponent extends Component {
         shootTimer = FXGL.newLocalTimer();
         shootTimer.capture();
         if (type == TowerType.NINJA) {
-            FXGL.inc("money", -5);
+            FXGL.inc("money", -50);
         }
         if (type == TowerType.FARMER) {
-            FXGL.inc("money", -1);
+            FXGL.inc("money", -10);
         }
         if (type == TowerType.BOMBER) {
-            FXGL.inc("money", -3);
+            FXGL.inc("money", -30);
         }
 
     }
