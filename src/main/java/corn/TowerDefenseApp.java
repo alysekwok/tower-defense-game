@@ -41,7 +41,7 @@ import java.util.*;
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class TowerDefenseApp extends GameApplication {
-    private int levelEnemies = 10;
+    private int levelEnemies = 25;
     private Point2D enemySpawnPoint = new Point2D(0, 100);
     private List<Point2D> waypoints = new ArrayList<>();
     public static final int WIDTH = 16 * 85;
@@ -121,6 +121,8 @@ public class TowerDefenseApp extends GameApplication {
         BooleanProperty enemiesLeft = new SimpleBooleanProperty();
         enemiesLeft.bind(getip("numEnemies").greaterThan(0));
         getGameTimer().runAtIntervalWhile(this::spawnEnemy, Duration.seconds(1), enemiesLeft);
+        getGameTimer().runAtIntervalWhile(this::spawnEnemy2, Duration.seconds(3), enemiesLeft);
+        getGameTimer().runAtIntervalWhile(this::spawnEnemy3, Duration.seconds(2), enemiesLeft);
         getEventBus().addEventHandler(EnemyKilledEvent.ANY, this::onEnemyKilled);
         getEventBus().addEventHandler(EnemyReachedGoalEvent.ANY, e -> gameOver(false));
 
@@ -182,8 +184,16 @@ public class TowerDefenseApp extends GameApplication {
 
     private void spawnEnemy() {
         inc("numEnemies", -1);
-
         spawn("Enemy", enemySpawnPoint.getX(), enemySpawnPoint.getY());
+    }
+    private void spawnEnemy2() {
+        inc("numEnemies", -1);
+        spawn("Enemy2", enemySpawnPoint.getX(), enemySpawnPoint.getY());
+    }
+
+    private void spawnEnemy3() {
+        inc("numEnemies", -1);
+        spawn("Enemy3", enemySpawnPoint.getX(), enemySpawnPoint.getY());
     }
 
     private void placeTower() {
