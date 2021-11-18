@@ -48,11 +48,25 @@ public class TowerComponent extends Component {
     }
 
     private void shoot(Entity enemy) {
+
         Point2D position = getEntity().getPosition();
 
         Point2D direction = enemy.getPosition().subtract(position);
 
-        Entity bullet = FXGL.spawn("Bullet", position);
-        bullet.addComponent(new ProjectileComponent(direction, Config.BULLET_SPEED));
+        if (type == TowerType.NINJA) {
+            Entity bullet = FXGL.spawn("Bullet1", position);
+            bullet.addComponent(new ProjectileComponent(direction, Config.BULLET_SPEED1));
+        }
+        if (type == TowerType.BOMBER) {
+            Entity bullet = FXGL.spawn("Bullet2", position);
+            bullet.addComponent(new ProjectileComponent(direction, Config.BULLET_SPEED2));
+        }
+
+        if (type == TowerType.FARMER) {
+            Entity bullet = FXGL.spawn("Bullet3", position);
+            bullet.addComponent(new ProjectileComponent(direction, Config.BULLET_SPEED3));
+        }
+
+
     }
 }

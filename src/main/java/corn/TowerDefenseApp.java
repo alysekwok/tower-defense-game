@@ -96,7 +96,7 @@ public class TowerDefenseApp extends GameApplication {
     @Override
     protected void initGame() {
         getGameWorld().addEntityFactory(new TowerDefenseFactory());
-        //getAssetLoader().loadJSON("json/map-5.json", TiledMap.class);
+        // getAssetLoader().loadJSON("json/map-5.json", TiledMap.class);
         // setLevelFromMap("map-5.json");
         // setLevelFromMap("map-5.tmx");
         // getGameWorld().setLevel(level);

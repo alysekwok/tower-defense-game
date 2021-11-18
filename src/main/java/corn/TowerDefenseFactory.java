@@ -135,11 +135,31 @@ public class TowerDefenseFactory implements EntityFactory {
                 .build();
     }
 
-    @Spawns("Bullet")
-    public Entity spawnBullet(SpawnData data) {
+    @Spawns("Bullet1")
+    public Entity spawnBullet1(SpawnData data) {
         return entityBuilder(data)
                 .type(TowerDefenseType.BULLET)
                 .viewWithBBox(new Rectangle(15, 5, Color.DARKGREY))
+                .with(new CollidableComponent(true))
+                .with(new OffscreenCleanComponent())
+                .build();
+    }
+
+    @Spawns("Bullet2")
+    public Entity spawnBullet2(SpawnData data) {
+        return entityBuilder(data)
+                .type(TowerDefenseType.BULLET)
+                .viewWithBBox(new Rectangle(15, 10, Color.DARKGREY))
+                .with(new CollidableComponent(true))
+                .with(new OffscreenCleanComponent())
+                .build();
+    }
+
+    @Spawns("Bullet3")
+    public Entity spawnBullet3(SpawnData data) {
+        return entityBuilder(data)
+                .type(TowerDefenseType.BULLET)
+                .viewWithBBox(new Rectangle(10, 5, Color.DARKGREY))
                 .with(new CollidableComponent(true))
                 .with(new OffscreenCleanComponent())
                 .build();
