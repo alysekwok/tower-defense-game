@@ -47,6 +47,7 @@ public class TowerDefenseApp extends GameApplication {
     private List<Point2D> waypoints = new ArrayList<>();
     public static final int WIDTH = 16 * 85;
     public static final int HEIGHT = 16 * 50;
+    private Map<String, Object> values;
 
     public List<Point2D> getWaypoints() {
         return new ArrayList<>(waypoints);
@@ -91,6 +92,7 @@ public class TowerDefenseApp extends GameApplication {
     protected void initGameVars(Map<String, Object> vars) {
         vars.put("numEnemies", levelEnemies);
         vars.put("money", 100);
+        values = vars;
     }
 
     @Override
@@ -227,7 +229,11 @@ public class TowerDefenseApp extends GameApplication {
     }
 
     private void placeTower() {
-        if (selectedColor == Color.PURPLE) {
+        if (selectedColor == Color.PURPLE && ((int)values.get("money") >= 30)) {
+            //inc("money", -30);
+            //System.out.println(values.get("money"));
+            values.replace("money", (int)values.get("money")-30);
+            System.out.println(values.get("money"));
             spawn("TowerBomber",
                     new SpawnData(getInput().getMouseXWorld(), getInput().getMouseYWorld())
                             .put("color", selectedColor)
@@ -235,7 +241,9 @@ public class TowerDefenseApp extends GameApplication {
                             .put("index", selectedIndex)
             );
         }
-        if (selectedColor == Color.LIGHTGREEN) {
+        if (selectedColor == Color.LIGHTGREEN && ((int)values.get("money") >= 10)) {
+            values.replace("money", (int)values.get("money")-10);
+            //System.out.println(values.get("money"));
             spawn("TowerFarmer",
                     new SpawnData(getInput().getMouseXWorld(), getInput().getMouseYWorld())
                             .put("color", selectedColor)
@@ -243,7 +251,9 @@ public class TowerDefenseApp extends GameApplication {
                             .put("index", selectedIndex)
             );
         }
-        if (selectedColor == Color.LIGHTPINK) {
+        if (selectedColor == Color.LIGHTPINK && ((int)values.get("money") >= 50)) {
+            values.replace("money", (int)values.get("money")-50);
+            //System.out.println(values.get("money"));
             spawn("TowerNinja",
                     new SpawnData(getInput().getMouseXWorld(), getInput().getMouseYWorld())
                             .put("color", selectedColor)
@@ -261,6 +271,8 @@ public class TowerDefenseApp extends GameApplication {
         Text xMark = getUIFactoryService().newText("X", Color.RED, 24);
         xMark.setTranslateX(position.getX());
         xMark.setTranslateY(position.getY() + 20);
+        values.replace("money", (int)values.get("money")+5);
+        //System.out.println(values.get("money"));
         getGameScene().addGameView(new GameView(xMark, 1000));
 
         levelEnemies--;

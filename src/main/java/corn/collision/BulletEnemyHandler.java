@@ -18,6 +18,7 @@ public class BulletEnemyHandler extends CollisionHandler {
         // TODO: add HP/Damage system
         var hp = enemy.getComponent(HealthIntComponent.class);
         hp.damage(1);
+        FXGL.inc("money", +5);
 
         FXGL.getEventBus().fireEvent(new EnemyKilledEvent(enemy));
         if (hp.isZero()) {
