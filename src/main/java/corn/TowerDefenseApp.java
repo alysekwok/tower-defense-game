@@ -42,7 +42,7 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class TowerDefenseApp extends GameApplication {
     private int levelEnemies = 10;
-    private Point2D enemySpawnPoint = new Point2D(50, 0);
+    private Point2D enemySpawnPoint = new Point2D(0, 85);
     private List<Point2D> waypoints = new ArrayList<>();
     public static final int WIDTH = 16 * 85;
     public static final int HEIGHT = 16 * 50;
@@ -111,11 +111,11 @@ public class TowerDefenseApp extends GameApplication {
 
         // TODO: read this from external level data
         waypoints.addAll(Arrays.asList(
-                new Point2D(700, 0),
-                new Point2D(700, 300),
-                new Point2D(50, 300),
-                new Point2D(50, 450),
-                new Point2D(700, 500)
+                new Point2D(950, 85),
+                new Point2D(950, 550),
+                new Point2D(120, 550),
+                new Point2D(120, 700),
+                new Point2D(900, 700)
         ));
         BooleanProperty enemiesLeft = new SimpleBooleanProperty();
         enemiesLeft.bind(getip("numEnemies").greaterThan(0));
@@ -152,7 +152,6 @@ public class TowerDefenseApp extends GameApplication {
 
         for (int i = 0; i < 4; i++) {
             int index = i + 1;
-
 
             Color color = FXGLMath.randomColor();
             // TowerType[] towerTypes = {TowerType.FARMER, TowerType.COW, TowerType.NINJA, TowerType.BOMBER};
