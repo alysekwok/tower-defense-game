@@ -6,11 +6,19 @@ import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.time.LocalTimer;
 import corn.TowerDefenseType;
 import corn.Config;
+import corn.tower.TowerType;
 import javafx.geometry.Point2D;
 import javafx.util.Duration;
 
 public class TowerComponent extends Component {
     private LocalTimer shootTimer;
+    private TowerType type;
+/*
+    public TowerComponent(TowerType type) {
+        this.type = type;
+    }
+
+ */
 
     @Override
     public void onAdded() {

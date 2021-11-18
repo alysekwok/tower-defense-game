@@ -7,6 +7,7 @@ public class TowerDataComponent extends Component {
     private int damage = 1;
     private double attackDelay = 1.5;
 
+
     public int getHP() {
         return hp;
     }

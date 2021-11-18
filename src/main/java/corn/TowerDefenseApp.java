@@ -42,7 +42,7 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class TowerDefenseApp extends GameApplication {
     private int levelEnemies = 10;
-    private Point2D enemySpawnPoint = new Point2D(0, 85);
+    private Point2D enemySpawnPoint = new Point2D(0, 100);
     private List<Point2D> waypoints = new ArrayList<>();
     public static final int WIDTH = 16 * 85;
     public static final int HEIGHT = 16 * 50;
@@ -111,11 +111,11 @@ public class TowerDefenseApp extends GameApplication {
 
         // TODO: read this from external level data
         waypoints.addAll(Arrays.asList(
-                new Point2D(950, 85),
-                new Point2D(950, 550),
-                new Point2D(120, 550),
-                new Point2D(120, 700),
-                new Point2D(900, 700)
+                new Point2D(970, 100),
+                new Point2D(970, 565),
+                new Point2D(130, 565),
+                new Point2D(130, 710),
+                new Point2D(900, 710)
         ));
         BooleanProperty enemiesLeft = new SimpleBooleanProperty();
         enemiesLeft.bind(getip("numEnemies").greaterThan(0));
@@ -141,7 +141,7 @@ public class TowerDefenseApp extends GameApplication {
     // TODO: this should be tower data
     private Color selectedColor = Color.BLACK;
     private int selectedIndex = 1;
-    private TowerType selectedType;
+    private TowerType selectedType = TowerType.FARMER;
 
     @Override
     protected void initUI() {
@@ -153,7 +153,9 @@ public class TowerDefenseApp extends GameApplication {
         for (int i = 0; i < 4; i++) {
             int index = i + 1;
 
-            Color color = FXGLMath.randomColor();
+
+            Color[] colors = {Color.BLACK, Color.PURPLE, Color.LIGHTGREEN, Color.LIGHTPINK};
+            Color color = colors[i];
             // TowerType[] towerTypes = {TowerType.FARMER, TowerType.COW, TowerType.NINJA, TowerType.BOMBER};
             // TowerType type = towerTypes[i];
             TowerIcon icon = new TowerIcon(color);
