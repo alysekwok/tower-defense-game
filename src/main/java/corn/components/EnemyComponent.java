@@ -13,6 +13,7 @@ import java.util.List;
 public class EnemyComponent extends Component {
     private List<Point2D> waypoints;
     private Point2D nextWaypoint;
+    private MonumentComponent monument = new MonumentComponent();
 
     private double speed;
     private int hp;
@@ -40,8 +41,12 @@ public class EnemyComponent extends Component {
             if (!waypoints.isEmpty()) {
                 nextWaypoint = waypoints.remove(0);
             } else {
-
-                FXGL.getEventBus().fireEvent(new EnemyReachedGoalEvent());
+                monument.subtractHealth(1);
+                System.out.println(monument.getHealth());
+                entity.removeFromWorld();
+                if (monument.getHealth() == 0) {
+                    FXGL.getEventBus().fireEvent(new EnemyReachedGoalEvent());
+                }
             }
         }
     }
