@@ -24,6 +24,7 @@ public class TowerComponent extends Component {
     public void onAdded() {
         shootTimer = FXGL.newLocalTimer();
         shootTimer.capture();
+        FXGL.inc("money", -1);
     }
 
     @Override

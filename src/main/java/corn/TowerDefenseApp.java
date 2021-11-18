@@ -89,6 +89,7 @@ public class TowerDefenseApp extends GameApplication {
     @Override
     protected void initGameVars(Map<String, Object> vars) {
         vars.put("numEnemies", levelEnemies);
+        vars.put("money", 10);
     }
 
     @Override
@@ -174,6 +175,16 @@ public class TowerDefenseApp extends GameApplication {
             FXGL.getGameScene().addUINode(monument);
 
             getGameScene().addUINode(icon);
+
+            Text moneyLabel = getUIFactoryService().newText("Money: ", Color.BLACK, 22);
+            Text moneyValue = getUIFactoryService().newText("", Color.BLACK, 22);
+            moneyLabel.setTranslateX(20);
+            moneyLabel.setTranslateY(20);
+            moneyValue.setTranslateX(100);
+            moneyValue.setTranslateY(20);
+            moneyValue.textProperty().bind(getWorldProperties().intProperty("money").asString());
+            getGameScene().addUINodes(moneyLabel, moneyValue);
+
         }
     }
 
