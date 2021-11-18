@@ -13,6 +13,7 @@ import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.texture.Texture;
 import corn.collision.BulletEnemyHandler;
+import corn.collision.MonumentEnemyHandler;
 import corn.event.EnemyKilledEvent;
 import corn.event.EnemyReachedGoalEvent;
 import corn.tower.TowerIcon;
@@ -133,6 +134,7 @@ public class TowerDefenseApp extends GameApplication {
     @Override
     protected void initPhysics() {
         getPhysicsWorld().addCollisionHandler(new BulletEnemyHandler());
+        getPhysicsWorld().addCollisionHandler(new MonumentEnemyHandler());
     }
 
     // TODO: this should be tower data
@@ -199,7 +201,7 @@ public class TowerDefenseApp extends GameApplication {
     }
 
     private void spawnMonument() {
-        spawn("Monument", 990, 650);
+        spawn("Monument", 900, 710);
     }
 
     private void placeTower() {
