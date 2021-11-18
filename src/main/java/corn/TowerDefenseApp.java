@@ -153,6 +153,8 @@ public class TowerDefenseApp extends GameApplication {
             int index = i + 1;
             Color[] colors = {Color.PURPLE, Color.LIGHTGREEN, Color.LIGHTPINK};
             Color color = colors[i];
+            String[] names = {"Bomber", "Farmer", "Ninja"};
+            String[] prices = {"Cost: 30", "Cost: 10", "Cost: 50"};
             // TowerType[] towerTypes = {TowerType.FARMER, TowerType.COW, TowerType.NINJA, TowerType.BOMBER};
             // TowerType type = towerTypes[i];
             TowerIcon icon = new TowerIcon(color);
@@ -163,7 +165,14 @@ public class TowerDefenseApp extends GameApplication {
                 selectedColor = color;
                 selectedIndex = index;
             });
-            getGameScene().addUINode(icon);
+            Text desc = getUIFactoryService().newText(names[i], Color.BLACK, 20);
+            desc.setTranslateX(1250);
+            desc.setTranslateY(140 + i * 100);
+            Text price = getUIFactoryService().newText(prices[i], Color.BLACK, 20);
+            price.setTranslateX(1250);
+            price.setTranslateY(160 + i * 100);
+
+            getGameScene().addUINodes(icon, desc, price);
         }
         var cow = FXGL.getAssetLoader().loadTexture("cow.PNG", 130, 130);
         cow.setTranslateX(1150);
@@ -171,16 +180,18 @@ public class TowerDefenseApp extends GameApplication {
         var bomber = FXGL.getAssetLoader().loadTexture("bomber.PNG", 80, 80);
         bomber.setTranslateX(1150);
         bomber.setTranslateY(120);
-        var farmer = FXGL.getAssetLoader().loadTexture("farmer.PNG", 85, 85);
+        var farmer = FXGL.getAssetLoader().loadTexture("farmer.PNG", 80, 80);
         farmer.setTranslateX(1150);
-        farmer.setTranslateY(225);
+        farmer.setTranslateY(220);
         var ninja = FXGL.getAssetLoader().loadTexture("ninja.PNG", 80, 80);
         ninja.setTranslateX(1150);
         ninja.setTranslateY(320);
 
+        var brutus = FXGL.getAssetLoader().loadTexture("brutus.PNG", 85, 125);
+        brutus.setTranslateX(950);
+        brutus.setTranslateY(610);
 
-
-        FXGL.getGameScene().addUINodes(cow, bomber, farmer, ninja);
+        FXGL.getGameScene().addUINodes(cow, bomber, farmer, ninja, brutus);
 
         Text towerTitle = getUIFactoryService().newText("TOWERS", Color.BLACK, 35);
         towerTitle.setTranslateX(1150);
