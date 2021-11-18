@@ -15,6 +15,7 @@ public class EnemyComponent extends Component {
     private Point2D nextWaypoint;
 
     private double speed;
+    private int hp;
 
     @Override
     public void onAdded() {

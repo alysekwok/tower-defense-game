@@ -35,15 +35,49 @@ public class TowerDefenseFactory implements EntityFactory {
                 .build();
     }
 
-    @Spawns("Tower")
-    public Entity spawnTower(SpawnData data) {
+    @Spawns("TowerBomber")
+    public Entity spawnTowerBomber(SpawnData data) {
         return entityBuilder(data)
                 .type(TowerDefenseType.TOWER)
                 .view(new Rectangle(40, 40, data.get("color")))
                 // .view((String) data.get("type"))
                 .with(new CollidableComponent(true))
-                .with(new TowerDataComponent())
-                .with(new TowerComponent())
+                .with(new TowerDataComponent(TowerType.BOMBER))
+                .with(new TowerComponent(TowerType.BOMBER))
+                .build();
+    }
+
+    @Spawns("TowerFarmer")
+    public Entity spawnTowerFarmer(SpawnData data) {
+        return entityBuilder(data)
+                .type(TowerDefenseType.TOWER)
+                .view(new Rectangle(40, 40, data.get("color")))
+                // .view((String) data.get("type"))
+                .with(new CollidableComponent(true))
+                .with(new TowerDataComponent(TowerType.FARMER))
+                .with(new TowerComponent(TowerType.FARMER))
+                .build();
+    }
+
+    @Spawns("TowerNinja")
+    public Entity spawnTowerNinja(SpawnData data) {
+        return entityBuilder(data)
+                .type(TowerDefenseType.TOWER)
+                .view(new Rectangle(40, 40, data.get("color")))
+                // .view((String) data.get("type"))
+                .with(new CollidableComponent(true))
+                .with(new TowerDataComponent(TowerType.NINJA))
+                .with(new TowerComponent(TowerType.NINJA))
+                .build();
+    }
+
+    @Spawns("Bullet")
+    public Entity spawnBullet(SpawnData data) {
+        return entityBuilder(data)
+                .type(TowerDefenseType.BULLET)
+                .viewWithBBox(new Rectangle(15, 5, Color.DARKGREY))
+                .with(new CollidableComponent(true))
+                .with(new OffscreenCleanComponent())
                 .build();
     }
 /*
@@ -83,13 +117,5 @@ public class TowerDefenseFactory implements EntityFactory {
 
      */
 
-    @Spawns("Bullet")
-    public Entity spawnBullet(SpawnData data) {
-        return entityBuilder(data)
-                .type(TowerDefenseType.BULLET)
-                .viewWithBBox(new Rectangle(15, 5, Color.DARKGREY))
-                .with(new CollidableComponent(true))
-                .with(new OffscreenCleanComponent())
-                .build();
-    }
+
 }

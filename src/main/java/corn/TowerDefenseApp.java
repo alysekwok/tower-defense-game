@@ -124,14 +124,6 @@ public class TowerDefenseApp extends GameApplication {
         getEventBus().addEventHandler(EnemyKilledEvent.ANY, this::onEnemyKilled);
         getEventBus().addEventHandler(EnemyReachedGoalEvent.ANY, e -> gameOver(false));
 
-        /*
-        FXGL.entityBuilder()
-                .type(TowerDefenseType.MONUMENT)
-                .at(520, 420)
-                .view("farmer.png")
-                .buildAndAttach();
-
-         */
     }
 
     @Override
@@ -151,41 +143,41 @@ public class TowerDefenseApp extends GameApplication {
 
         // getGameScene().addUINode(uiBG);
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             int index = i + 1;
-
-
-            Color[] colors = {Color.BLACK, Color.PURPLE, Color.LIGHTGREEN, Color.LIGHTPINK};
+            Color[] colors = {Color.PURPLE, Color.LIGHTGREEN, Color.LIGHTPINK};
             Color color = colors[i];
             // TowerType[] towerTypes = {TowerType.FARMER, TowerType.COW, TowerType.NINJA, TowerType.BOMBER};
             // TowerType type = towerTypes[i];
             TowerIcon icon = new TowerIcon(color);
             icon.setTranslateX(1150);
-            icon.setTranslateY(80 + i * 100);
+            icon.setTranslateY(120 + i * 100);
             icon.setOnMouseClicked(e -> {
                 // selectedType = type;
                 selectedColor = color;
                 selectedIndex = index;
             });
-
-            var monument = FXGL.getAssetLoader().loadTexture("cow.PNG", 130, 130);
-            monument.setTranslateX(1150);
-            monument.setTranslateY(600);
-
-            FXGL.getGameScene().addUINode(monument);
-
             getGameScene().addUINode(icon);
-
-            Text moneyLabel = getUIFactoryService().newText("Money: ", Color.BLACK, 22);
-            Text moneyValue = getUIFactoryService().newText("", Color.BLACK, 22);
-            moneyLabel.setTranslateX(20);
-            moneyLabel.setTranslateY(20);
-            moneyValue.setTranslateX(100);
-            moneyValue.setTranslateY(20);
-            moneyValue.textProperty().bind(getWorldProperties().intProperty("money").asString());
-            getGameScene().addUINodes(moneyLabel, moneyValue);
-
         }
+        var monument = FXGL.getAssetLoader().loadTexture("cow.PNG", 130, 130);
+        monument.setTranslateX(1150);
+        monument.setTranslateY(600);
+
+        FXGL.getGameScene().addUINode(monument);
+
+        Text towerTitle = getUIFactoryService().newText("TOWERS", Color.BLACK, 35);
+        towerTitle.setTranslateX(1150);
+        towerTitle.setTranslateY(50);
+        getGameScene().addUINode(towerTitle);
+
+        Text moneyLabel = getUIFactoryService().newText("Money: ", Color.BLACK, 25);
+        Text moneyValue = getUIFactoryService().newText("", Color.BLACK, 25);
+        moneyLabel.setTranslateX(1160);
+        moneyLabel.setTranslateY(80);
+        moneyValue.setTranslateX(1250);
+        moneyValue.setTranslateY(80);
+        moneyValue.textProperty().bind(getWorldProperties().intProperty("money").asString());
+        getGameScene().addUINodes(moneyLabel, moneyValue);
     }
 
     private void spawnEnemy() {
@@ -195,20 +187,34 @@ public class TowerDefenseApp extends GameApplication {
     }
 
     private void placeTower() {
-        spawn("Tower",
-                new SpawnData(getInput().getMouseXWorld(), getInput().getMouseYWorld())
-                        .put("color", selectedColor)
-                        // .put("type", selectedType)
-                        .put("index", selectedIndex)
-        );
+        if (selectedColor == Color.PURPLE) {
+            spawn("TowerBomber",
+                    new SpawnData(getInput().getMouseXWorld(), getInput().getMouseYWorld())
+                            .put("color", selectedColor)
+                            // .put("type", selectedType)
+                            .put("index", selectedIndex)
+            );
+        }
+        if (selectedColor == Color.LIGHTGREEN) {
+            spawn("TowerFarmer",
+                    new SpawnData(getInput().getMouseXWorld(), getInput().getMouseYWorld())
+                            .put("color", selectedColor)
+                            // .put("type", selectedType)
+                            .put("index", selectedIndex)
+            );
+        }
+        if (selectedColor == Color.LIGHTPINK) {
+            spawn("TowerNinja",
+                    new SpawnData(getInput().getMouseXWorld(), getInput().getMouseYWorld())
+                            .put("color", selectedColor)
+                            // .put("type", selectedType)
+                            .put("index", selectedIndex)
+            );
+        }
+
     }
 
     private void onEnemyKilled(EnemyKilledEvent event) {
-        levelEnemies--;
-
-        if (levelEnemies == 0) {
-            gameOver(true);
-        }
 
         Entity enemy = event.getEnemy();
         Point2D position = enemy.getPosition();
@@ -216,8 +222,13 @@ public class TowerDefenseApp extends GameApplication {
         Text xMark = getUIFactoryService().newText("X", Color.RED, 24);
         xMark.setTranslateX(position.getX());
         xMark.setTranslateY(position.getY() + 20);
-
         getGameScene().addGameView(new GameView(xMark, 1000));
+
+        levelEnemies--;
+
+        if (levelEnemies == 0) {
+            gameOver(true);
+        }
     }
 
     private void gameOver(boolean won) {

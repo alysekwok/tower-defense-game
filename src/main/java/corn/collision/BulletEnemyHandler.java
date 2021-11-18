@@ -14,8 +14,8 @@ public class BulletEnemyHandler extends CollisionHandler {
     @Override
     protected void onCollisionBegin(Entity bullet, Entity enemy) {
         bullet.removeFromWorld();
-
         // TODO: add HP/Damage system
+
         FXGL.getEventBus().fireEvent(new EnemyKilledEvent(enemy));
         enemy.removeFromWorld();
     }

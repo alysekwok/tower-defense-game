@@ -13,18 +13,25 @@ import javafx.util.Duration;
 public class TowerComponent extends Component {
     private LocalTimer shootTimer;
     private TowerType type;
-/*
+
     public TowerComponent(TowerType type) {
         this.type = type;
     }
-
- */
 
     @Override
     public void onAdded() {
         shootTimer = FXGL.newLocalTimer();
         shootTimer.capture();
-        FXGL.inc("money", -1);
+        if (type == TowerType.NINJA) {
+            FXGL.inc("money", -5);
+        }
+        if (type == TowerType.FARMER) {
+            FXGL.inc("money", -1);
+        }
+        if (type == TowerType.BOMBER) {
+            FXGL.inc("money", -3);
+        }
+
     }
 
     @Override
