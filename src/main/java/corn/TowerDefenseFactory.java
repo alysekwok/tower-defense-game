@@ -85,11 +85,16 @@ public class TowerDefenseFactory implements EntityFactory {
     }
 
     @Spawns("TowerBomber")
-    public Entity spawnTowerBomber(SpawnData data) {
-        return entityBuilder(data)
+    public Entity spawnTowerBomber(SpawnData data) throws FileNotFoundException {
+        FileInputStream temp1 = new FileInputStream("./src/main/resources/assets/textures/bomber.PNG");
+        ImageView image1 = new ImageView(new Image(temp1));
+        image1.preserveRatioProperty();
+        image1.setFitWidth(70);
+        image1.setFitHeight(70);
+
+        return FXGL.entityBuilder(data)
                 .type(TowerDefenseType.TOWER)
-                .view(new Rectangle(40, 40, data.get("color")))
-                // .view((String) data.get("type"))
+                .viewWithBBox((image1))
                 .with(new CollidableComponent(true))
                 .with(new TowerDataComponent(TowerType.BOMBER))
                 .with(new TowerComponent(TowerType.BOMBER))
@@ -97,11 +102,16 @@ public class TowerDefenseFactory implements EntityFactory {
     }
 
     @Spawns("TowerFarmer")
-    public Entity spawnTowerFarmer(SpawnData data) {
-        return entityBuilder(data)
+    public Entity spawnTowerFarmer(SpawnData data) throws FileNotFoundException {
+        FileInputStream temp2 = new FileInputStream("./src/main/resources/assets/textures/farmer.PNG");
+        ImageView image2 = new ImageView(new Image(temp2));
+        image2.preserveRatioProperty();
+        image2.setFitWidth(70);
+        image2.setFitHeight(70);
+
+        return FXGL.entityBuilder(data)
                 .type(TowerDefenseType.TOWER)
-                .view(new Rectangle(40, 40, data.get("color")))
-                // .view((String) data.get("type"))
+                .viewWithBBox((image2))
                 .with(new CollidableComponent(true))
                 .with(new TowerDataComponent(TowerType.FARMER))
                 .with(new TowerComponent(TowerType.FARMER))
@@ -109,11 +119,16 @@ public class TowerDefenseFactory implements EntityFactory {
     }
 
     @Spawns("TowerNinja")
-    public Entity spawnTowerNinja(SpawnData data) {
-        return entityBuilder(data)
+    public Entity spawnTowerNinja(SpawnData data) throws FileNotFoundException {
+        FileInputStream temp3 = new FileInputStream("./src/main/resources/assets/textures/ninja.PNG");
+        ImageView image3 = new ImageView(new Image(temp3));
+        image3.preserveRatioProperty();
+        image3.setFitWidth(70);
+        image3.setFitHeight(70);
+
+        return FXGL.entityBuilder(data)
                 .type(TowerDefenseType.TOWER)
-                .view(new Rectangle(40, 40, data.get("color")))
-                // .view((String) data.get("type"))
+                .viewWithBBox((image3))
                 .with(new CollidableComponent(true))
                 .with(new TowerDataComponent(TowerType.NINJA))
                 .with(new TowerComponent(TowerType.NINJA))
@@ -151,38 +166,39 @@ public class TowerDefenseFactory implements EntityFactory {
 
 /*
     @Spawns("TowerBomber")
-    public Entity spawnTowerBomber(SpawnData data) throws FileNotFoundException {
-        FileInputStream temp = new FileInputStream("./src/main/resources/assets/textures/bomber.PNG");
-        ImageView image = new ImageView(new Image(temp));
-        image.preserveRatioProperty();
-        image.setFitWidth(70);
-        image.setFitHeight(70);
-
-        return FXGL.entityBuilder(data)
+    public Entity spawnTowerBomber(SpawnData data) {
+        return entityBuilder(data)
                 .type(TowerDefenseType.TOWER)
-                .viewWithBBox((image))
+                .view(new Rectangle(40, 40, data.get("color")))
+                // .view((String) data.get("type"))
                 .with(new CollidableComponent(true))
-                .with(new TowerDataComponent())
+                .with(new TowerDataComponent(TowerType.BOMBER))
                 .with(new TowerComponent(TowerType.BOMBER))
                 .build();
+
     }
 
     @Spawns("TowerFarmer")
-    public Entity spawnTowerFarmer(SpawnData data) throws FileNotFoundException {
-        FileInputStream temp = new FileInputStream("./src/main/resources/assets/textures/farmer.PNG");
-        ImageView image = new ImageView(new Image(temp));
-        image.preserveRatioProperty();
-        image.setFitWidth(70);
-        image.setFitHeight(70);
-
-        return FXGL.entityBuilder(data)
+    public Entity spawnTowerFarmer(SpawnData data) {
+        return entityBuilder(data)
                 .type(TowerDefenseType.TOWER)
-                .viewWithBBox((image))
+                .view(new Rectangle(40, 40, data.get("color")))
+                // .view((String) data.get("type"))
                 .with(new CollidableComponent(true))
-                .with(new TowerDataComponent())
+                .with(new TowerDataComponent(TowerType.FARMER))
                 .with(new TowerComponent(TowerType.FARMER))
                 .build();
-    }
+            }
+    @Spawns("TowerNinja")
+    public Entity spawnTowerNinja(SpawnData data) {
+        return entityBuilder(data)
+                .type(TowerDefenseType.TOWER)
+                .view(new Rectangle(40, 40, data.get("color")))
+                // .view((String) data.get("type"))
+                .with(new CollidableComponent(true))
+                .with(new TowerDataComponent(TowerType.NINJA))
+                .with(new TowerComponent(TowerType.NINJA))
+                .build();
 
      */
 

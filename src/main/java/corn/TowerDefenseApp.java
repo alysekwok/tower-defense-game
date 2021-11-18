@@ -163,11 +163,22 @@ public class TowerDefenseApp extends GameApplication {
             });
             getGameScene().addUINode(icon);
         }
-        var monument = FXGL.getAssetLoader().loadTexture("cow.PNG", 130, 130);
-        monument.setTranslateX(1150);
-        monument.setTranslateY(600);
+        var cow = FXGL.getAssetLoader().loadTexture("cow.PNG", 130, 130);
+        cow.setTranslateX(1150);
+        cow.setTranslateY(600);
+        var bomber = FXGL.getAssetLoader().loadTexture("bomber.PNG", 80, 80);
+        bomber.setTranslateX(1150);
+        bomber.setTranslateY(120);
+        var farmer = FXGL.getAssetLoader().loadTexture("farmer.PNG", 85, 85);
+        farmer.setTranslateX(1150);
+        farmer.setTranslateY(225);
+        var ninja = FXGL.getAssetLoader().loadTexture("ninja.PNG", 80, 80);
+        ninja.setTranslateX(1150);
+        ninja.setTranslateY(320);
 
-        FXGL.getGameScene().addUINode(monument);
+
+
+        FXGL.getGameScene().addUINodes(cow, bomber, farmer, ninja);
 
         Text towerTitle = getUIFactoryService().newText("TOWERS", Color.BLACK, 35);
         towerTitle.setTranslateX(1150);
