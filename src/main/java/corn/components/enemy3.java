@@ -40,13 +40,7 @@ public class enemy3 extends Component {
             if (!waypoints.isEmpty()) {
                 nextWaypoint = waypoints.remove(0);
             } else {
-
-                monument.subtractHealth(2);
-                System.out.println(monument.getHealth());
-                entity.removeFromWorld();
-                if (monument.getHealth() == 0) {
-                    FXGL.getEventBus().fireEvent(new EnemyReachedGoalEvent());
-                }
+//                FXGL.getEventBus().fireEvent(new EnemyReachedGoalEvent());
             }
         }
     }
