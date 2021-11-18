@@ -143,6 +143,7 @@ public class TowerDefenseApp extends GameApplication {
     private Color selectedColor = Color.BLACK;
     private int selectedIndex = 1;
     private TowerType selectedType = TowerType.FARMER;
+    private String selectedText;
 
     @Override
     protected void initUI() {
@@ -168,8 +169,24 @@ public class TowerDefenseApp extends GameApplication {
                 selectedIndex = index;
             });
             Text desc = getUIFactoryService().newText(names[i], Color.BLACK, 20);
+            String name = names[i];
             desc.setTranslateX(1250);
             desc.setTranslateY(140 + i * 100);
+            desc.setOnMouseClicked(e -> {
+                selectedText = name;
+                if (selectedText.equals(names[0])) {
+                    showMessage("Corn Bomber does more damage but attacks slower. Cost: 30");
+                }
+                if (selectedText.equals(names[1])) {
+                    showMessage("Corn Farmer protects its own. Shoots down enemies with the most standard bullets at the most" +
+                            "standard speed. Cost: 10");
+                }
+                if (selectedText.equals(names[2])) {
+                    showMessage("Corn Ninja is trained and can shoot faster with higher grade bullets. Cost: 50");
+                }
+
+
+            });
             Text price = getUIFactoryService().newText(prices[i], Color.BLACK, 20);
             price.setTranslateX(1250);
             price.setTranslateY(160 + i * 100);
