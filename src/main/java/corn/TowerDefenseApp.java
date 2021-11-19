@@ -6,6 +6,7 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.GameView;
 import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.core.math.FXGLMath;
+import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.level.tiled.TiledMap;
@@ -14,6 +15,7 @@ import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.texture.Texture;
 import corn.collision.BulletEnemyHandler;
 import corn.collision.MonumentEnemyHandler;
+import corn.components.MonumentComponent;
 import corn.event.EnemyKilledEvent;
 import corn.event.EnemyReachedGoalEvent;
 import corn.tower.TowerIcon;
@@ -132,6 +134,8 @@ public class TowerDefenseApp extends GameApplication {
         getEventBus().addEventHandler(EnemyReachedGoalEvent.ANY, e -> gameOver(false));
 
     }
+
+
 
     @Override
     protected void initPhysics() {

@@ -15,13 +15,14 @@ public class MonumentEnemyHandler extends CollisionHandler {
 
     @Override
     protected void onCollisionBegin(Entity enemy, Entity monument) {
-        enemy.removeFromWorld();
+        FXGL.getEventBus().fireEvent(new EnemyKilledEvent(enemy));
         var hp = monument.getComponent(HealthIntComponent.class);
         hp.damage(1);
 
 
+
         if (hp.isZero()) {
-            FXGL.getEventBus().fireEvent(new EnemyReachedGoalEvent());
+            FXGL.getEventBus().fireEvent(new EnemyReachedGoalEvent(monument));
         }
     }
 }

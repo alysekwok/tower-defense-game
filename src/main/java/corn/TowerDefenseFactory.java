@@ -172,12 +172,12 @@ public class TowerDefenseFactory implements EntityFactory {
         hpView.setFill(Color.LIGHTGREEN);
         hpView.setMaxValue(10);
         hpView.setWidth(50);
-        hpView.setTranslateY(20);
-        hpView.setTranslateX(50);
+        hpView.setTranslateY(-120);
+        hpView.setTranslateX(70);
         hpView.currentValueProperty().bind(hp.valueProperty());
         return FXGL.entityBuilder(data)
-                .type(TowerDefenseType.ENEMY)
-                .viewWithBBox(new Circle(20, Color.ROSYBROWN))
+                .type(TowerDefenseType.MONUMENT)
+                .viewWithBBox(new Circle(0, Color.BLACK))
                 .with(new CollidableComponent(true))
                 .view(hpView)
                 .with(hp)
