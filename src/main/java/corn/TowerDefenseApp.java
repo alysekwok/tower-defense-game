@@ -63,7 +63,7 @@ public class TowerDefenseApp extends GameApplication {
 
 
     @Override
-    protected void initSettings(GameSettings settings) {
+    public void initSettings(GameSettings settings) {
         settings.setTitle("CornTD");
         settings.setVersion("1.0");
         settings.setWidth(WIDTH);
@@ -82,7 +82,7 @@ public class TowerDefenseApp extends GameApplication {
     }
 
     @Override
-    protected void initInput() {
+    public void initInput() {
         Input input = getInput();
         input.addAction(new UserAction("Place Tower") {
             private Rectangle2D worldBounds = new Rectangle2D(0, 0, getAppWidth(), getAppHeight() - 100 - 40);
@@ -97,14 +97,14 @@ public class TowerDefenseApp extends GameApplication {
     }
 
     @Override
-    protected void initGameVars(Map<String, Object> vars) {
+    public void initGameVars(Map<String, Object> vars) {
         vars.put("numEnemies", levelEnemies);
         vars.put("money", mon);
         values = vars;
     }
 
     @Override
-    protected void initGame() {
+    public void initGame() {
         getGameWorld().addEntityFactory(new TowerDefenseFactory());
         // getAssetLoader().loadJSON("json/map-5.json", TiledMap.class);
         // setLevelFromMap("map-5.json");
@@ -159,7 +159,7 @@ public class TowerDefenseApp extends GameApplication {
     }
 
     @Override
-    protected void initPhysics() {
+    public void initPhysics() {
         getPhysicsWorld().addCollisionHandler(new BulletEnemyHandler());
         getPhysicsWorld().addCollisionHandler(new MonumentEnemyHandler());
     }
@@ -171,7 +171,7 @@ public class TowerDefenseApp extends GameApplication {
     private String selectedText;
 
     @Override
-    protected void initUI() {
+    public void initUI() {
        // Rectangle uiBG = new Rectangle(getAppWidth(), 100);
         // uiBG.setTranslateY(500);
 
