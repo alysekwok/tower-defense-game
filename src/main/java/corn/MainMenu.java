@@ -4,36 +4,81 @@ import com.almasb.fxgl.app.scene.MenuType;
 import com.almasb.fxgl.dsl.FXGL;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
+import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.Predicate;
+
 public class MainMenu extends FXGLMenu{
 
     public MainMenu() {
         super(MenuType.MAIN_MENU);
-        var button = new startButton("Start new game", this::fireNewGame);
-        button.setTranslateX(FXGL.getAppWidth() / 2 - 200 / 2);
-        button.setTranslateY(FXGL.getAppHeight() / 2 - 40 / 2);
-        getContentRoot().getChildren().add(button);
+        startMenu();
     }
-    private static class startButton extends StackPane {
-        public startButton(String name, Runnable action) {
-            var bg = new Rectangle(200, 40);
-            bg.setStroke(Color.WHITE);
+
+    public void startMenu() {
+        getContentRoot().getChildren().setAll(new Pane());
+        cornTDButton startButton = new cornTDButton("Play", this::configMenu);
+        startButton.setTranslateX(FXGL.getAppWidth() / 2 - 200 / 2);
+        startButton.setTranslateY(FXGL.getAppHeight() / 2 - 40 / 2);
+        getContentRoot().getChildren().add(startButton);
+    }
+    public void configMenu() {
+        getContentRoot().getChildren().setAll(new Pane());
+
+        FXGL.getDialogService().showInputBox("Enter your name: ", SANITIZE_NAME, name -> {
+            //GameVars.setName(name);
+        });
+
+        ToggleGroup difficulty = new ToggleGroup();
+        RadioButton easy = new RadioButton("easy");
+        easy.setToggleGroup(difficulty);
+        easy.setOnAction((ActionEvent action) -> TowerDefenseApp.setDifficulty(0));
+        RadioButton medium = new RadioButton("medium");
+        medium.setToggleGroup(difficulty);
+        medium.setOnAction((ActionEvent action) -> TowerDefenseApp.setDifficulty(1));
+        RadioButton hard = new RadioButton("hard");
+        hard.setToggleGroup(difficulty);
+        hard.setOnAction((ActionEvent action) -> TowerDefenseApp.setDifficulty(2));
+
+        HBox gameDifficulty = new HBox();
+        gameDifficulty.getChildren().addAll(easy, medium, hard);
+
+        var startButton = new cornTDButton("Start", this::fireNewGame);
+
+        VBox vbox = new VBox(50);
+        vbox.getChildren().addAll(gameDifficulty, startButton);
+        vbox.setTranslateX(FXGL.getAppWidth() / 2 - 100);
+        vbox.setTranslateY(FXGL.getAppHeight() / 2 - 20);
+
+        getContentRoot().getChildren().add(vbox);
+    }
+    private static class cornTDButton extends StackPane {
+        public cornTDButton(String name, Runnable action) {
+            var rect = new Rectangle(200, 40);
+            rect.setStroke(Color.WHITE);
             var text = FXGL.getUIFactoryService().newText(name, Color.WHITE, 18);
-            bg.fillProperty().bind(
+            rect.fillProperty().bind(
                     Bindings.when(hoverProperty()).then(Color.WHITE).otherwise(Color.BLACK)
             );
             text.fillProperty().bind(
                     Bindings.when(hoverProperty()).then(Color.BLACK).otherwise(Color.WHITE)
             );
             setOnMouseClicked(e -> action.run());
-            getChildren().addAll(bg, text);
+            getChildren().addAll(rect, text);
         }
     }
+
+    private static final Predicate<String> SANITIZE_NAME = (str) -> str.matches("\\S+");
 }

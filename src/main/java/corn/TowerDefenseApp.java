@@ -38,12 +38,12 @@ import com.almasb.fxgl.dsl.views.ScrollingBackgroundView;
 import javafx.geometry.HorizontalDirection;
 import javafx.geometry.Orientation;
 
-
 import java.util.*;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class TowerDefenseApp extends GameApplication {
+    private static int mon = 0;
     private int levelEnemies = 25;
     private Point2D enemySpawnPoint = new Point2D(0, 100);
     private List<Point2D> waypoints = new ArrayList<>();
@@ -93,7 +93,7 @@ public class TowerDefenseApp extends GameApplication {
     @Override
     protected void initGameVars(Map<String, Object> vars) {
         vars.put("numEnemies", levelEnemies);
-        vars.put("money", 100);
+        vars.put("money", mon);
         values = vars;
     }
 
@@ -315,6 +315,14 @@ public class TowerDefenseApp extends GameApplication {
     public static void main(String[] args) {
         launch(args);
     }
-
+    public static void setDifficulty(int num) {
+        if (num == 0) {
+            mon = 100;
+        } else if (num == 1) {
+            mon = 80;
+        } else {
+            mon = 60;
+        }
+    }
 
 }
