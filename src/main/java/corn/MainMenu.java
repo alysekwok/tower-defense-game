@@ -56,7 +56,7 @@ public class MainMenu extends FXGLMenu {
 
         VBox vbox = new VBox(50);
         vbox.getChildren().addAll(gameDifficulty, startButton);
-        vbox.setTranslateX(FXGL.getAppWidth() / 2 - 100);
+        vbox.setTranslateX(FXGL.getAppWidth() / 2);
         vbox.setTranslateY(FXGL.getAppHeight() / 2 - 20);
 
         getContentRoot().getChildren().add(vbox);

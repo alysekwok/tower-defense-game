@@ -343,12 +343,20 @@ public class TowerDefenseApp extends GameApplication {
     }
 
     private void gameOver(boolean won) {
+        getGameController().pauseEngine();
         if (won) {
-            showMessage("Congrats! You won", getGameController()::exit);
+            showMessage("Congrats! You won!");
         } else {
-            showMessage("lol u lost", getGameController()::exit);
+            showMessage("You lost. Better luck next time!");
         }
-
+        CornTDButton restart = new CornTDButton("Restart", getGameController()::gotoMainMenu);
+        restart.setTranslateX(FXGL.getAppWidth() / 2);
+        restart.setTranslateY(FXGL.getAppHeight() / 2 - 50);
+        getGameScene().addUINode(restart);
+        CornTDButton exit = new CornTDButton("Exit", getGameController()::exit);
+        exit.setTranslateX(FXGL.getAppWidth() / 2);
+        exit.setTranslateY(FXGL.getAppHeight() / 2 - 10);
+        getGameScene().addUINode(exit);
     }
     public static void setDifficulty(int num) {
         if (num == 0) {
