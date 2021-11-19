@@ -6,7 +6,6 @@ import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
