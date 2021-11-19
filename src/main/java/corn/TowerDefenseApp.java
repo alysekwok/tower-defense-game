@@ -44,12 +44,14 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class TowerDefenseApp extends GameApplication {
     private static int mon = 0;
-    private int levelEnemies = 25;
+    private static int levelEnemies = 25;
+    private static int totalEnemies = 25;
     private Point2D enemySpawnPoint = new Point2D(0, 100);
     private List<Point2D> waypoints = new ArrayList<>();
     public static final int WIDTH = 16 * 85;
     public static final int HEIGHT = 16 * 50;
     private Map<String, Object> values;
+    private static final int MAX_ENEMIES = 5;
 
     public List<Point2D> getWaypoints() {
         return new ArrayList<>(waypoints);
@@ -233,16 +235,27 @@ public class TowerDefenseApp extends GameApplication {
 
     private void spawnEnemy() {
         inc("numEnemies", -1);
-        spawn("Enemy", enemySpawnPoint.getX(), enemySpawnPoint.getY());
+        totalEnemies--;
+        if (totalEnemies >= 0) {
+            spawn("Enemy", enemySpawnPoint.getX(), enemySpawnPoint.getY());
+
+        }
     }
     private void spawnEnemy2() {
         inc("numEnemies", -1);
-        spawn("Enemy2", enemySpawnPoint.getX(), enemySpawnPoint.getY());
+        totalEnemies--;
+        if (totalEnemies >= 0) {
+            spawn("Enemy2", enemySpawnPoint.getX(), enemySpawnPoint.getY());
+
+        }
     }
 
     private void spawnEnemy3() {
         inc("numEnemies", -1);
-        spawn("Enemy3", enemySpawnPoint.getX(), enemySpawnPoint.getY());
+        totalEnemies--;
+        if (totalEnemies >= 0) {
+            spawn("Enemy3", enemySpawnPoint.getX(), enemySpawnPoint.getY());
+        }
     }
 
     private void spawnMonument() {
