@@ -25,8 +25,11 @@ public class MainMenu extends FXGLMenu {
         getContentRoot().getChildren().setAll(new Pane());
         CornTDButton startButton = new CornTDButton("Play", this::configMenu);
         startButton.setTranslateX(FXGL.getAppWidth() / 2 - 200 / 2);
-        startButton.setTranslateY(FXGL.getAppHeight() / 2 - 40 / 2);
-        getContentRoot().getChildren().add(startButton);
+        startButton.setTranslateY(FXGL.getAppHeight() / 2 - 40 / 2 + 150);
+        var logo = FXGL.getAssetLoader().loadTexture("logo.PNG", 500, 420);
+        logo.setTranslateX(FXGL.getAppWidth() / 2 - 200 / 2 - 150);
+        logo.setTranslateY(FXGL.getAppHeight() / 2 - 40 / 2 - 300);
+        getContentRoot().getChildren().addAll(logo, startButton);
     }
     public void configMenu() {
         getContentRoot().getChildren().setAll(new Pane());
@@ -46,7 +49,7 @@ public class MainMenu extends FXGLMenu {
         hard.setToggleGroup(difficulty);
         hard.setOnAction((ActionEvent action) -> TowerDefenseApp.setDifficulty(2));
 
-        HBox gameDifficulty = new HBox();
+        VBox gameDifficulty = new VBox();
         gameDifficulty.getChildren().addAll(easy, medium, hard);
 
         var startButton = new CornTDButton("Start", this::fireNewGame);
