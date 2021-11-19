@@ -62,6 +62,46 @@ public class TowerDefenseApp extends GameApplication {
     }
 
 
+    public static int getMon() {
+        return mon;
+    }
+
+    public static int getLevelEnemies() {
+        return levelEnemies;
+    }
+
+    public static int getTotalEnemies() {
+        return totalEnemies;
+    }
+
+    public Point2D getEnemySpawnPoint() {
+        return enemySpawnPoint;
+    }
+
+    public Map<String, Object> getValues() {
+        return values;
+    }
+
+    public static int getMaxEnemies() {
+        return MAX_ENEMIES;
+    }
+
+    public Color getSelectedColor() {
+        return selectedColor;
+    }
+
+    public int getSelectedIndex() {
+        return selectedIndex;
+    }
+
+    public TowerType getSelectedType() {
+        return selectedType;
+    }
+
+    public String getSelectedText() {
+        return selectedText;
+    }
+
     @Override
     public void initSettings(GameSettings settings) {
         settings.setTitle("CornTD");
