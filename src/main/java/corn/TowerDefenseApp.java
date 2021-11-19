@@ -5,6 +5,8 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.GameView;
 import com.almasb.fxgl.app.scene.SceneFactory;
+import com.almasb.fxgl.app.scene.FXGLMenu;
+import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
@@ -20,6 +22,7 @@ import corn.event.EnemyKilledEvent;
 import corn.event.EnemyReachedGoalEvent;
 import corn.tower.TowerIcon;
 import corn.tower.TowerType;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Point2D;
@@ -27,6 +30,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -125,7 +129,25 @@ public class TowerDefenseApp extends GameApplication {
                 new Point2D(130, 710),
                 new Point2D(900, 710)
         ));
+    }
 
+    private static class cornTDButton extends StackPane {
+        public cornTDButton(String name, Runnable action) {
+            var rect = new Rectangle(200, 40);
+            rect.setStroke(Color.WHITE);
+            var text = FXGL.getUIFactoryService().newText(name, Color.WHITE, 18);
+            rect.fillProperty().bind(
+                    Bindings.when(hoverProperty()).then(Color.WHITE).otherwise(Color.BLACK)
+            );
+            text.fillProperty().bind(
+                    Bindings.when(hoverProperty()).then(Color.BLACK).otherwise(Color.WHITE)
+            );
+            setOnMouseClicked(e -> action.run());
+            getChildren().addAll(rect, text);
+        }
+    }
+
+    public void startWave() {
         BooleanProperty enemiesLeft = new SimpleBooleanProperty();
         enemiesLeft.bind(getip("numEnemies").greaterThan(0));
         spawnMonument();
@@ -134,10 +156,7 @@ public class TowerDefenseApp extends GameApplication {
         getGameTimer().runAtIntervalWhile(this::spawnEnemy3, Duration.seconds(2), enemiesLeft);
         getEventBus().addEventHandler(EnemyKilledEvent.ANY, this::onEnemyKilled);
         getEventBus().addEventHandler(EnemyReachedGoalEvent.ANY, e -> gameOver(false));
-
     }
-
-
 
     @Override
     protected void initPhysics() {
@@ -231,6 +250,11 @@ public class TowerDefenseApp extends GameApplication {
         moneyValue.setTranslateY(80);
         moneyValue.textProperty().bind(getWorldProperties().intProperty("money").asString());
         getGameScene().addUINodes(moneyLabel, moneyValue);
+
+        cornTDButton startButton = new cornTDButton("Start Combat", this::startWave);
+        startButton.setTranslateX(100);
+        startButton.setTranslateY(25);
+        getGameScene().addUINode(startButton);
     }
 
     private void spawnEnemy() {
