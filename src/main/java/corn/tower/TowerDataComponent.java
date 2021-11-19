@@ -7,7 +7,7 @@ public class TowerDataComponent extends Component {
     private int damage;
     private double attackDelay;
 
-    public TowerDataComponent (TowerType type) {
+    public TowerDataComponent(TowerType type) {
         if (type == TowerType.NINJA) {
             hp = 2;
             damage = 1;

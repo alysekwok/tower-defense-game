@@ -5,7 +5,6 @@ import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
 import corn.TowerDefenseApp;
-import corn.event.EnemyReachedGoalEvent;
 import javafx.geometry.Point2D;
 
 import java.util.List;
@@ -14,7 +13,6 @@ public class EnemyComponent extends Component {
     private List<Point2D> waypoints;
     private Point2D nextWaypoint;
     private Entity monument;
-//    private MonumentComponent monument = new MonumentComponent();
 
     private double speed;
     private int hp;
@@ -43,7 +41,6 @@ public class EnemyComponent extends Component {
                 nextWaypoint = waypoints.remove(0);
             } else {
                 entity.removeFromWorld();
-//                FXGL.getEventBus().fireEvent(new EnemyReachedGoalEvent(monument));
             }
         }
     }

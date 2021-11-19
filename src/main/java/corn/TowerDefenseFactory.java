@@ -17,10 +17,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Circle;
 import com.almasb.fxgl.dsl.FXGL;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
 import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
 
 public class TowerDefenseFactory implements EntityFactory {
@@ -60,7 +58,7 @@ public class TowerDefenseFactory implements EntityFactory {
                 .with(new CollidableComponent(true))
                 .view(hpView)
                 .with(hp)
-                .with(new enemy2())
+                .with(new Enemy2())
                 .build();
     }
 
@@ -80,13 +78,14 @@ public class TowerDefenseFactory implements EntityFactory {
                 .with(new CollidableComponent(true))
                 .view(hpView)
                 .with(hp)
-                .with(new enemy3())
+                .with(new Enemy3())
                 .build();
     }
 
     @Spawns("TowerBomber")
     public Entity spawnTowerBomber(SpawnData data) throws FileNotFoundException {
-        FileInputStream temp1 = new FileInputStream("./src/main/resources/assets/textures/bomber.PNG");
+        FileInputStream temp1 = new
+                FileInputStream("./src/main/resources/assets/textures/bomber.PNG");
         ImageView image1 = new ImageView(new Image(temp1));
         image1.preserveRatioProperty();
         image1.setFitWidth(70);
@@ -103,7 +102,8 @@ public class TowerDefenseFactory implements EntityFactory {
 
     @Spawns("TowerFarmer")
     public Entity spawnTowerFarmer(SpawnData data) throws FileNotFoundException {
-        FileInputStream temp2 = new FileInputStream("./src/main/resources/assets/textures/farmer.PNG");
+        FileInputStream temp2 = new
+                FileInputStream("./src/main/resources/assets/textures/farmer.PNG");
         ImageView image2 = new ImageView(new Image(temp2));
         image2.preserveRatioProperty();
         image2.setFitWidth(70);
@@ -120,7 +120,8 @@ public class TowerDefenseFactory implements EntityFactory {
 
     @Spawns("TowerNinja")
     public Entity spawnTowerNinja(SpawnData data) throws FileNotFoundException {
-        FileInputStream temp3 = new FileInputStream("./src/main/resources/assets/textures/ninja.PNG");
+        FileInputStream temp3 = new
+                FileInputStream("./src/main/resources/assets/textures/ninja.PNG");
         ImageView image3 = new ImageView(new Image(temp3));
         image3.preserveRatioProperty();
         image3.setFitWidth(70);
@@ -184,44 +185,6 @@ public class TowerDefenseFactory implements EntityFactory {
                 .with(new MonumentComponent())
                 .build();
     }
-
-/*
-    @Spawns("TowerBomber")
-    public Entity spawnTowerBomber(SpawnData data) {
-        return entityBuilder(data)
-                .type(TowerDefenseType.TOWER)
-                .view(new Rectangle(40, 40, data.get("color")))
-                // .view((String) data.get("type"))
-                .with(new CollidableComponent(true))
-                .with(new TowerDataComponent(TowerType.BOMBER))
-                .with(new TowerComponent(TowerType.BOMBER))
-                .build();
-
-    }
-
-    @Spawns("TowerFarmer")
-    public Entity spawnTowerFarmer(SpawnData data) {
-        return entityBuilder(data)
-                .type(TowerDefenseType.TOWER)
-                .view(new Rectangle(40, 40, data.get("color")))
-                // .view((String) data.get("type"))
-                .with(new CollidableComponent(true))
-                .with(new TowerDataComponent(TowerType.FARMER))
-                .with(new TowerComponent(TowerType.FARMER))
-                .build();
-            }
-    @Spawns("TowerNinja")
-    public Entity spawnTowerNinja(SpawnData data) {
-        return entityBuilder(data)
-                .type(TowerDefenseType.TOWER)
-                .view(new Rectangle(40, 40, data.get("color")))
-                // .view((String) data.get("type"))
-                .with(new CollidableComponent(true))
-                .with(new TowerDataComponent(TowerType.NINJA))
-                .with(new TowerComponent(TowerType.NINJA))
-                .build();
-
-     */
 
 
 }

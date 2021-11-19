@@ -15,7 +15,7 @@ public class BulletEnemyHandler extends CollisionHandler {
     @Override
     protected void onCollisionBegin(Entity bullet, Entity enemy) {
         bullet.removeFromWorld();
-        // TODO: add HP/Damage system
+        // add hp/damage system
         var hp = enemy.getComponent(HealthIntComponent.class);
         hp.damage(1);
         FXGL.inc("money", +5);

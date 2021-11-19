@@ -3,10 +3,7 @@ import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.app.scene.MenuType;
 import com.almasb.fxgl.dsl.FXGL;
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.StringBinding;
 import javafx.event.ActionEvent;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
@@ -15,12 +12,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.function.Predicate;
 
-public class MainMenu extends FXGLMenu{
+public class MainMenu extends FXGLMenu {
 
     public MainMenu() {
         super(MenuType.MAIN_MENU);
@@ -29,7 +23,7 @@ public class MainMenu extends FXGLMenu{
 
     public void startMenu() {
         getContentRoot().getChildren().setAll(new Pane());
-        cornTDButton startButton = new cornTDButton("Play", this::configMenu);
+        CornTDButton startButton = new CornTDButton("Play", this::configMenu);
         startButton.setTranslateX(FXGL.getAppWidth() / 2 - 200 / 2);
         startButton.setTranslateY(FXGL.getAppHeight() / 2 - 40 / 2);
         getContentRoot().getChildren().add(startButton);
@@ -55,7 +49,7 @@ public class MainMenu extends FXGLMenu{
         HBox gameDifficulty = new HBox();
         gameDifficulty.getChildren().addAll(easy, medium, hard);
 
-        var startButton = new cornTDButton("Start", this::fireNewGame);
+        var startButton = new CornTDButton("Start", this::fireNewGame);
 
         VBox vbox = new VBox(50);
         vbox.getChildren().addAll(gameDifficulty, startButton);
@@ -64,8 +58,11 @@ public class MainMenu extends FXGLMenu{
 
         getContentRoot().getChildren().add(vbox);
     }
-    private static class cornTDButton extends StackPane {
-        public cornTDButton(String name, Runnable action) {
+
+    private static final Predicate<String> SANITIZE_NAME = (str) -> str.matches("\\S+");
+
+    private static class CornTDButton extends StackPane {
+        public CornTDButton(String name, Runnable action) {
             var rect = new Rectangle(200, 40);
             rect.setStroke(Color.WHITE);
             var text = FXGL.getUIFactoryService().newText(name, Color.WHITE, 18);
@@ -79,6 +76,4 @@ public class MainMenu extends FXGLMenu{
             getChildren().addAll(rect, text);
         }
     }
-
-    private static final Predicate<String> SANITIZE_NAME = (str) -> str.matches("\\S+");
 }

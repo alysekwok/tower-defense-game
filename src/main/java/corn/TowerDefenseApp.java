@@ -5,19 +5,13 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.GameView;
 import com.almasb.fxgl.app.scene.SceneFactory;
-import com.almasb.fxgl.app.scene.FXGLMenu;
-import com.almasb.fxgl.dsl.FXGL;
-import com.almasb.fxgl.core.math.FXGLMath;
-import com.almasb.fxgl.dsl.components.HealthIntComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
-import com.almasb.fxgl.entity.level.tiled.TiledMap;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.texture.Texture;
 import corn.collision.BulletEnemyHandler;
 import corn.collision.MonumentEnemyHandler;
-import corn.components.MonumentComponent;
 import corn.event.EnemyKilledEvent;
 import corn.event.EnemyReachedGoalEvent;
 import corn.tower.TowerIcon;
@@ -27,13 +21,10 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import com.almasb.fxgl.app.scene.FXGLMenu;
@@ -41,9 +32,7 @@ import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.views.ScrollingBackgroundView;
 import javafx.geometry.HorizontalDirection;
 import javafx.geometry.Orientation;
-
 import java.util.*;
-
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class TowerDefenseApp extends GameApplication {
@@ -56,11 +45,14 @@ public class TowerDefenseApp extends GameApplication {
     public static final int HEIGHT = 16 * 50;
     private Map<String, Object> values;
     private static final int MAX_ENEMIES = 5;
+    private Color selectedColor = Color.BLACK; //tower data
+    private int selectedIndex = 1;
+    private TowerType selectedType = TowerType.FARMER;
+    private String selectedText;
 
     public List<Point2D> getWaypoints() {
         return new ArrayList<>(waypoints);
     }
-
 
     public static int getMon() {
         return mon;
@@ -125,8 +117,10 @@ public class TowerDefenseApp extends GameApplication {
     public void initInput() {
         Input input = getInput();
         input.addAction(new UserAction("Place Tower") {
-            private Rectangle2D worldBounds = new Rectangle2D(0, 0, getAppWidth(), getAppHeight() - 100 - 40);
-            private Rectangle2D mapBounds = new Rectangle2D(0, 0, 16 * 65, getAppHeight() - 100 - 40);
+            private Rectangle2D worldBounds = new
+                    Rectangle2D(0, 0, getAppWidth(), getAppHeight() - 100 - 40);
+            private Rectangle2D mapBounds = new
+                    Rectangle2D(0, 0, 16 * 65, getAppHeight() - 100 - 40);
             @Override
             protected void onActionBegin() {
                 if (mapBounds.contains(input.getMousePositionWorld())) {
@@ -161,7 +155,7 @@ public class TowerDefenseApp extends GameApplication {
         getGameScene().getViewport().setBounds(0, 0, Integer.MAX_VALUE, getAppHeight());
 
 
-        // TODO: read this from external level data
+        // read from external data
         waypoints.addAll(Arrays.asList(
                 new Point2D(970, 100),
                 new Point2D(970, 565),
@@ -169,22 +163,6 @@ public class TowerDefenseApp extends GameApplication {
                 new Point2D(130, 710),
                 new Point2D(900, 710)
         ));
-    }
-
-    private static class cornTDButton extends StackPane {
-        public cornTDButton(String name, Runnable action) {
-            var rect = new Rectangle(200, 40);
-            rect.setStroke(Color.WHITE);
-            var text = FXGL.getUIFactoryService().newText(name, Color.WHITE, 18);
-            rect.fillProperty().bind(
-                    Bindings.when(hoverProperty()).then(Color.WHITE).otherwise(Color.BLACK)
-            );
-            text.fillProperty().bind(
-                    Bindings.when(hoverProperty()).then(Color.BLACK).otherwise(Color.WHITE)
-            );
-            setOnMouseClicked(e -> action.run());
-            getChildren().addAll(rect, text);
-        }
     }
 
     public void startWave() {
@@ -204,32 +182,18 @@ public class TowerDefenseApp extends GameApplication {
         getPhysicsWorld().addCollisionHandler(new MonumentEnemyHandler());
     }
 
-    // TODO: this should be tower data
-    private Color selectedColor = Color.BLACK;
-    private int selectedIndex = 1;
-    private TowerType selectedType = TowerType.FARMER;
-    private String selectedText;
-
     @Override
     public void initUI() {
-       // Rectangle uiBG = new Rectangle(getAppWidth(), 100);
-        // uiBG.setTranslateY(500);
-
-        // getGameScene().addUINode(uiBG);
-
         for (int i = 0; i < 3; i++) {
             int index = i + 1;
             Color[] colors = {Color.PURPLE, Color.LIGHTGREEN, Color.LIGHTPINK};
             Color color = colors[i];
             String[] names = {"Bomber", "Farmer", "Ninja"};
             String[] prices = {"Cost: 30", "Cost: 10", "Cost: 50"};
-            // TowerType[] towerTypes = {TowerType.FARMER, TowerType.COW, TowerType.NINJA, TowerType.BOMBER};
-            // TowerType type = towerTypes[i];
             TowerIcon icon = new TowerIcon(color);
             icon.setTranslateX(1150);
             icon.setTranslateY(120 + i * 100);
             icon.setOnMouseClicked(e -> {
-                // selectedType = type;
                 selectedColor = color;
                 selectedIndex = index;
             });
@@ -243,11 +207,13 @@ public class TowerDefenseApp extends GameApplication {
                     showMessage("Corn Bomber does more damage but attacks slower. Cost: 30");
                 }
                 if (selectedText.equals(names[1])) {
-                    showMessage("Corn Farmer protects its own. Shoots down enemies with the most standard bullets at the most" +
-                            "standard speed. Cost: 10");
+                    showMessage("Corn Farmer protects its own."
+                            + "Shoots down enemies with the most standard bullets at the most"
+                            + "standard speed. Cost: 10");
                 }
                 if (selectedText.equals(names[2])) {
-                    showMessage("Corn Ninja is trained and can shoot faster with higher grade bullets. Cost: 50");
+                    showMessage("Corn Ninja is trained"
+                            + "and can shoot faster with higher grade bullets. Cost: 50");
                 }
 
 
@@ -291,7 +257,7 @@ public class TowerDefenseApp extends GameApplication {
         moneyValue.textProperty().bind(getWorldProperties().intProperty("money").asString());
         getGameScene().addUINodes(moneyLabel, moneyValue);
 
-        cornTDButton startButton = new cornTDButton("Start Combat", this::startWave);
+        CornTDButton startButton = new CornTDButton("Start Combat", this::startWave);
         startButton.setTranslateX(100);
         startButton.setTranslateY(25);
         getGameScene().addUINode(startButton);
@@ -327,11 +293,8 @@ public class TowerDefenseApp extends GameApplication {
     }
 
     private void placeTower() {
-        if (selectedColor == Color.PURPLE && ((int)values.get("money") >= 30)) {
-            //inc("money", -30);
-            //System.out.println(values.get("money"));
-            values.replace("money", (int)values.get("money")-30);
-            System.out.println(values.get("money"));
+        if (selectedColor == Color.PURPLE && ((int) values.get("money") >= 30)) {
+            values.replace("money", (int) values.get("money") - 30);
             spawn("TowerBomber",
                     new SpawnData(getInput().getMouseXWorld(), getInput().getMouseYWorld())
                             .put("color", selectedColor)
@@ -339,8 +302,8 @@ public class TowerDefenseApp extends GameApplication {
                             .put("index", selectedIndex)
             );
         }
-        if (selectedColor == Color.LIGHTGREEN && ((int)values.get("money") >= 10)) {
-            values.replace("money", (int)values.get("money")-10);
+        if (selectedColor == Color.LIGHTGREEN && ((int) values.get("money") >= 10)) {
+            values.replace("money", (int) values.get("money") - 10);
             //System.out.println(values.get("money"));
             spawn("TowerFarmer",
                     new SpawnData(getInput().getMouseXWorld(), getInput().getMouseYWorld())
@@ -349,8 +312,8 @@ public class TowerDefenseApp extends GameApplication {
                             .put("index", selectedIndex)
             );
         }
-        if (selectedColor == Color.LIGHTPINK && ((int)values.get("money") >= 50)) {
-            values.replace("money", (int)values.get("money")-50);
+        if (selectedColor == Color.LIGHTPINK && ((int) values.get("money") >= 50)) {
+            values.replace("money", (int) values.get("money") - 50);
             //System.out.println(values.get("money"));
             spawn("TowerNinja",
                     new SpawnData(getInput().getMouseXWorld(), getInput().getMouseYWorld())
@@ -369,8 +332,7 @@ public class TowerDefenseApp extends GameApplication {
         Text xMark = getUIFactoryService().newText("X", Color.RED, 24);
         xMark.setTranslateX(position.getX());
         xMark.setTranslateY(position.getY() + 20);
-        values.replace("money", (int)values.get("money")+5);
-        //System.out.println(values.get("money"));
+        values.replace("money", (int) values.get("money") + 5);
         getGameScene().addGameView(new GameView(xMark, 1000));
 
         levelEnemies--;
@@ -388,10 +350,6 @@ public class TowerDefenseApp extends GameApplication {
         }
 
     }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
     public static void setDifficulty(int num) {
         if (num == 0) {
             mon = 100;
@@ -399,6 +357,25 @@ public class TowerDefenseApp extends GameApplication {
             mon = 80;
         } else {
             mon = 60;
+        }
+    }
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    private static class CornTDButton extends StackPane {
+        public CornTDButton(String name, Runnable action) {
+            var rect = new Rectangle(200, 40);
+            rect.setStroke(Color.WHITE);
+            var text = FXGL.getUIFactoryService().newText(name, Color.WHITE, 18);
+            rect.fillProperty().bind(
+                    Bindings.when(hoverProperty()).then(Color.WHITE).otherwise(Color.BLACK)
+            );
+            text.fillProperty().bind(
+                    Bindings.when(hoverProperty()).then(Color.BLACK).otherwise(Color.WHITE)
+            );
+            setOnMouseClicked(e -> action.run());
+            getChildren().addAll(rect, text);
         }
     }
 

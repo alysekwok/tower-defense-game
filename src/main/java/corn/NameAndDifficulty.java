@@ -9,15 +9,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class NameAndDifficulty extends FXGLMenu {
-    public NameAndDifficulty(){
+    public NameAndDifficulty() {
         super(MenuType.MAIN_MENU);
-        var button = new NameAndDifficulty.enterButton("Enter", this::fireNewGame);
+        var button = new NameAndDifficulty.EnterButton("Enter", this::fireNewGame);
         button.setTranslateX(FXGL.getAppWidth() / 2 - 200 / 2);
         button.setTranslateY(FXGL.getAppHeight() / 2 - 40 / 2);
         getContentRoot().getChildren().add(button);
     }
-    private static class enterButton extends StackPane {
-        public enterButton(String name, Runnable action) {
+    private static class EnterButton extends StackPane {
+        public EnterButton(String name, Runnable action) {
             var bg = new Rectangle(200, 40);
             bg.setStroke(Color.WHITE);
             var text = FXGL.getUIFactoryService().newText(name, Color.WHITE, 18);

@@ -2,15 +2,13 @@ package corn.components;
 
 
 import com.almasb.fxgl.dsl.FXGL;
-import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
 import corn.TowerDefenseApp;
-import corn.event.EnemyReachedGoalEvent;
 import javafx.geometry.Point2D;
 
 import java.util.List;
 
-public class enemy2 extends Component {
+public class Enemy2 extends Component {
     private List<Point2D> waypoints;
     private Point2D nextWaypoint;
     private MonumentComponent monument = new MonumentComponent();
@@ -39,8 +37,6 @@ public class enemy2 extends Component {
 
             if (!waypoints.isEmpty()) {
                 nextWaypoint = waypoints.remove(0);
-            } else {
-//                FXGL.getEventBus().fireEvent(new EnemyReachedGoalEvent());
             }
         }
     }

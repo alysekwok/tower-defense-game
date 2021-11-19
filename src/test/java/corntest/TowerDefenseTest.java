@@ -1,18 +1,14 @@
-package cornTest;
+package corntest;
 
-import com.almasb.fxgl.app.GameApplication;
 import corn.TowerDefenseApp;
 import corn.TowerDefenseFactory;
 import corn.tower.TowerType;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
-import org.jetbrains.annotations.NotNull;
-import org.junit.Test;
 import com.almasb.fxgl.app.GameSettings;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

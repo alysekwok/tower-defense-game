@@ -53,11 +53,7 @@ public class TowerComponent extends Component {
         Point2D direction = enemy.getPosition().subtract(position);
 
 
-        if (position.distance(direction.getX(), direction.getY()) >= 1000) {
-            ;
-        } else {
-
-
+        if (position.distance(direction.getX(), direction.getY()) < 1000) {
             if (type == TowerType.NINJA) {
                 Entity bullet = FXGL.spawn("Bullet1", position);
                 bullet.addComponent(new ProjectileComponent(direction, Config.BULLET_SPEED1));
