@@ -82,6 +82,26 @@ public class TowerDefenseFactory implements EntityFactory {
                 .build();
     }
 
+    @Spawns("boss")
+    public Entity spawnBoss(SpawnData data) throws FileNotFoundException {
+        var hp = new HealthIntComponent(25);
+        var hpView = new ProgressBar(false);
+        hpView.setFill(Color.LIGHTGREEN);
+        hpView.setMaxValue(25);
+        hpView.setWidth(50);
+        hpView.setTranslateY(-30);
+        hpView.setTranslateX(-25);
+        hpView.currentValueProperty().bind(hp.valueProperty());
+        return FXGL.entityBuilder(data)
+                .type(TowerDefenseType.ENEMY)
+                .viewWithBBox(new Circle(33, Color.BLACK))
+                .with(new CollidableComponent(true))
+                .view(hpView)
+                .with(hp)
+                .with(new Enemy3())
+                .build();
+    }
+
     @Spawns("TowerBomber")
     public Entity spawnTowerBomber(SpawnData data) throws FileNotFoundException {
         FileInputStream temp1 = new

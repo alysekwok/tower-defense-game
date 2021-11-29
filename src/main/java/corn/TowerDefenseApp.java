@@ -172,6 +172,7 @@ public class TowerDefenseApp extends GameApplication {
         getGameTimer().runAtIntervalWhile(this::spawnEnemy, Duration.seconds(1), enemiesLeft);
         getGameTimer().runAtIntervalWhile(this::spawnEnemy2, Duration.seconds(3), enemiesLeft);
         getGameTimer().runAtIntervalWhile(this::spawnEnemy3, Duration.seconds(2), enemiesLeft);
+        getGameTimer().runOnceAfter(this::spawnBoss, Duration.seconds(13));
         getEventBus().addEventHandler(EnemyKilledEvent.ANY, this::onEnemyKilled);
         getEventBus().addEventHandler(EnemyReachedGoalEvent.ANY, e -> gameOver(false));
     }
@@ -285,6 +286,14 @@ public class TowerDefenseApp extends GameApplication {
         totalEnemies--;
         if (totalEnemies >= 0) {
             spawn("Enemy3", enemySpawnPoint.getX(), enemySpawnPoint.getY());
+        }
+    }
+
+    private void spawnBoss() {
+        inc("numEnemies", -1);
+        totalEnemies--;
+        if (totalEnemies >= 0) {
+            spawn("boss", enemySpawnPoint.getX(), enemySpawnPoint.getY());
         }
     }
 
