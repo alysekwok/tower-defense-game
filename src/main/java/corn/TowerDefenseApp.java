@@ -448,7 +448,6 @@ public class TowerDefenseApp extends GameApplication {
     private void onEnemyKilled(EnemyKilledEvent event) {
         Entity enemy = event.getEnemy();
         Point2D position = enemy.getPosition();
-
         Text xMark = getUIFactoryService().newText("X", Color.RED, 24);
         xMark.setTranslateX(position.getX());
         xMark.setTranslateY(position.getY() + 20);

@@ -54,5 +54,9 @@ public class Boss extends Component {
             }
         }
     }
+    @Override
+    public String toString() {
+        return "Boss";
+    }
 
 }

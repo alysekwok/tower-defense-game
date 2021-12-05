@@ -20,8 +20,7 @@ public class MonumentEnemyHandler extends CollisionHandler {
         hp.damage(1);
 
 
-
-        if (hp.isZero()) {
+        if (hp.isZero()|| enemy.getComponents().get(enemy.getComponents().size() - 1).toString().equals("Boss")) {
             FXGL.getEventBus().fireEvent(new EnemyReachedGoalEvent(monument));
         }
     }
