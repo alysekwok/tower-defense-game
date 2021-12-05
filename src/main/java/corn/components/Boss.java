@@ -18,9 +18,17 @@ public class Boss extends Component {
     public boolean increaseSpeed() {
         return true;
     }
-    public boolean update(double tpf) {return true;}
-    public boolean exists() {return true;}
-    public Boss() {};
+
+    public boolean update(double tpf) {
+        return true;
+    }
+
+    public boolean exists() {
+        return true;
+    }
+
+    public Boss() { };
+
     @Override
     public void onAdded() {
         waypoints = ((TowerDefenseApp) FXGL.getApp()).getWaypoints();

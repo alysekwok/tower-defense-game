@@ -1,20 +1,15 @@
 package corntest;
 import corn.TowerDefenseApp;
-import corn.TowerDefenseFactory;
 import corn.components.Boss;
 import corn.components.TowerComponent;
 import corn.tower.TowerType;
-import javafx.geometry.Point2D;
-import javafx.scene.paint.Color;
-import com.almasb.fxgl.app.GameSettings;
 import org.junit.jupiter.api.BeforeEach;
-
-import java.awt.*;
 import java.util.HashMap;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-public class demoTest {
+
+public class DemoTest {
     @BeforeEach
     void setUp() {
         HashMap<String, Object> map = new HashMap<String, Object>();

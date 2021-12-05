@@ -3,9 +3,6 @@ package corn;
 import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.app.scene.MenuType;
 import javafx.scene.layout.Pane;
-import org.jetbrains.annotations.NotNull;
-import com.almasb.fxgl.app.scene.FXGLMenu;
-import com.almasb.fxgl.app.scene.MenuType;
 import com.almasb.fxgl.dsl.FXGL;
 import javafx.beans.binding.Bindings;
 import javafx.scene.layout.StackPane;
@@ -15,11 +12,11 @@ import javafx.scene.shape.Rectangle;
 
 public class WinScreen extends FXGLMenu {
 
-    public WinScreen(){
+    public WinScreen() {
         super(MenuType.MAIN_MENU);
-        System.out.println("Nice") ;
+        System.out.println("Nice");
         winScreen();
-//        var button = new WinScreen.RestartButton("Restart", this:: fireNewGame);
+        //var button = new WinScreen.RestartButton("Restart", this:: fireNewGame);
     }
 
     public void winScreen() {

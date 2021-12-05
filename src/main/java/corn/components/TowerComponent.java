@@ -18,7 +18,10 @@ public class TowerComponent extends Component {
     public boolean increaseShootTimer() {
         return true;
     }
-    public boolean update(double tpf) {return true;}
+    public boolean update(double tpf) {
+        return true;
+    }
+
     public TowerComponent(TowerType type) {
         this.type = type;
     }
