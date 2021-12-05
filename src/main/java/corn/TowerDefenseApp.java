@@ -3,6 +3,7 @@ package corn;
 import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.app.scene.GameScene;
 import com.almasb.fxgl.app.scene.GameView;
 import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.entity.Entity;
@@ -12,6 +13,7 @@ import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.texture.Texture;
 import corn.collision.BulletEnemyHandler;
 import corn.collision.MonumentEnemyHandler;
+import corn.components.MonumentComponent;
 import corn.event.EnemyKilledEvent;
 import corn.event.EnemyReachedGoalEvent;
 import corn.tower.TowerIcon;
@@ -39,6 +41,9 @@ public class TowerDefenseApp extends GameApplication {
     private static int mon = 0;
     private static int levelEnemies = 25;
     private static int totalEnemies = 25;
+    private static int enemiesKilled = 0;
+    private static int bulletsShot = 0;
+    private static int moneySpent = 0;
     private Point2D enemySpawnPoint = new Point2D(0, 100);
     private List<Point2D> waypoints = new ArrayList<>();
     public static final int WIDTH = 16 * 85;
@@ -49,6 +54,7 @@ public class TowerDefenseApp extends GameApplication {
     private int selectedIndex = 1;
     private TowerType selectedType = TowerType.FARMER;
     private String selectedText;
+    private MonumentComponent monument = new MonumentComponent();
 
     public List<Point2D> getWaypoints() {
         return new ArrayList<>(waypoints);
@@ -93,6 +99,11 @@ public class TowerDefenseApp extends GameApplication {
     public String getSelectedText() {
         return selectedText;
     }
+
+    public void incrementBullet() {bulletsShot++;}
+
+    public void increaseMoneySpent(int amount) {moneySpent += amount;}
+
 
     @Override
     public void initSettings(GameSettings settings) {
@@ -172,7 +183,7 @@ public class TowerDefenseApp extends GameApplication {
         getGameTimer().runAtIntervalWhile(this::spawnEnemy, Duration.seconds(1), enemiesLeft);
         getGameTimer().runAtIntervalWhile(this::spawnEnemy2, Duration.seconds(3), enemiesLeft);
         getGameTimer().runAtIntervalWhile(this::spawnEnemy3, Duration.seconds(2), enemiesLeft);
-        getGameTimer().runOnceAfter(this::spawnBoss, Duration.seconds(13));
+        getGameTimer().runOnceAfter(this::spawnBoss, Duration.seconds(14));
         getEventBus().addEventHandler(EnemyKilledEvent.ANY, this::onEnemyKilled);
         getEventBus().addEventHandler(EnemyReachedGoalEvent.ANY, e -> gameOver(false));
     }
@@ -334,7 +345,6 @@ public class TowerDefenseApp extends GameApplication {
     }
 
     private void onEnemyKilled(EnemyKilledEvent event) {
-
         Entity enemy = event.getEnemy();
         Point2D position = enemy.getPosition();
 
@@ -344,6 +354,7 @@ public class TowerDefenseApp extends GameApplication {
         values.replace("money", (int) values.get("money") + 5);
         getGameScene().addGameView(new GameView(xMark, 1000));
 
+        enemiesKilled++;
         levelEnemies--;
 
         if (levelEnemies == 0) {
@@ -351,12 +362,17 @@ public class TowerDefenseApp extends GameApplication {
         }
     }
 
+
+
+
     private void gameOver(boolean won) {
         getGameController().pauseEngine();
         if (won) {
-            showMessage("Congrats! You won!");
+            showMessage("Congrats! You won!" + "\nStatistics:\nEnemies Killed: " + enemiesKilled + "\nBullets Shot:"
+                    + bulletsShot + "\nMoney Spent: " + moneySpent);
         } else {
-            showMessage("You lost. Better luck next time!");
+            showMessage("You lost. Better luck next time!" + "\nStatistics:\nEnemies Killed: " + enemiesKilled + "\nBullets Shot:"
+                    + bulletsShot + "\nMoney Spent: " + moneySpent);
         }
         CornTDButton restart = new CornTDButton("Restart", getGameController()::gotoMainMenu);
         restart.setTranslateX(FXGL.getAppWidth() / 2);

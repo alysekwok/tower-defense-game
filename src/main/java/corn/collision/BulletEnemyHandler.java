@@ -18,10 +18,10 @@ public class BulletEnemyHandler extends CollisionHandler {
         // add hp/damage system
         var hp = enemy.getComponent(HealthIntComponent.class);
         hp.damage(1);
-        FXGL.inc("money", +5);
 
-        FXGL.getEventBus().fireEvent(new EnemyKilledEvent(enemy));
         if (hp.isZero()) {
+            FXGL.inc("money", +5);
+            FXGL.getEventBus().fireEvent(new EnemyKilledEvent(enemy));
             enemy.removeFromWorld();
         }
     }

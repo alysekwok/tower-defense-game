@@ -4,6 +4,7 @@ import com.almasb.fxgl.dsl.components.ProjectileComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.time.LocalTimer;
+import corn.TowerDefenseApp;
 import corn.TowerDefenseType;
 import corn.Config;
 import corn.tower.TowerType;
@@ -13,6 +14,7 @@ import javafx.util.Duration;
 public class TowerComponent extends Component {
     private LocalTimer shootTimer;
     private TowerType type;
+    private TowerDefenseApp app = new TowerDefenseApp();
 
     public TowerComponent(TowerType type) {
         this.type = type;
@@ -24,12 +26,15 @@ public class TowerComponent extends Component {
         shootTimer.capture();
         if (type == TowerType.NINJA) {
             FXGL.inc("money", -50);
+            app.increaseMoneySpent(50);
         }
         if (type == TowerType.FARMER) {
             FXGL.inc("money", -10);
+            app.increaseMoneySpent(10);
         }
         if (type == TowerType.BOMBER) {
             FXGL.inc("money", -30);
+            app.increaseMoneySpent(30);
         }
 
     }
@@ -67,6 +72,8 @@ public class TowerComponent extends Component {
                 Entity bullet = FXGL.spawn("Bullet3", position);
                 bullet.addComponent(new ProjectileComponent(direction, Config.BULLET_SPEED3));
             }
+            app.incrementBullet();
+
         }
 
 
