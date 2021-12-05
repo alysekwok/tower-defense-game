@@ -15,7 +15,10 @@ public class TowerComponent extends Component {
     private LocalTimer shootTimer;
     private TowerType type;
     private TowerDefenseApp app = new TowerDefenseApp();
-
+    public boolean increaseShootTimer() {
+        return true;
+    }
+    public boolean update(double tpf) {return true;}
     public TowerComponent(TowerType type) {
         this.type = type;
     }

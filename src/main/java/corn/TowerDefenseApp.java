@@ -104,6 +104,15 @@ public class TowerDefenseApp extends GameApplication {
 
     public void increaseMoneySpent(int amount) {moneySpent += amount;}
 
+    public static int getKilledEnemies() {return 1;}
+
+    public static int getShotBullets() {return 1;}
+
+    public static int getSpentMoney() {return 1;}
+
+    public boolean restart() {return true;}
+
+    public boolean exit() {return true;}
 
     @Override
     public void initSettings(GameSettings settings) {
