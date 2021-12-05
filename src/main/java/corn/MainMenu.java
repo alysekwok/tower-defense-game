@@ -6,11 +6,14 @@ import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.function.Predicate;
 
 public class MainMenu extends FXGLMenu {
@@ -30,34 +33,36 @@ public class MainMenu extends FXGLMenu {
         logo.setTranslateY(FXGL.getAppHeight() / 2 - 40 / 2 - 300);
         getContentRoot().getChildren().addAll(logo, startButton);
     }
-    public void configMenu() {
+    public void configMenu()  {
         getContentRoot().getChildren().setAll(new Pane());
 
         FXGL.getDialogService().showInputBox("Enter your name: ", SANITIZE_NAME, name -> {
             //GameVars.setName(name);
         });
+        var brutus = FXGL.getAssetLoader().loadTexture("brutusdabuckeye.jpeg");
+        // brutus.setTranslateX(FXGL.getAppWidth() / 2);
+        getContentRoot().getChildren().add(brutus);
 
         ToggleGroup difficulty = new ToggleGroup();
-        RadioButton easy = new RadioButton("easy");
+        RadioButton easy = new RadioButton("EASY");
         easy.setToggleGroup(difficulty);
         easy.setOnAction((ActionEvent action) -> TowerDefenseApp.setDifficulty(0));
-        RadioButton medium = new RadioButton("medium");
+        RadioButton medium = new RadioButton("MEDIUM");
         medium.setToggleGroup(difficulty);
         medium.setOnAction((ActionEvent action) -> TowerDefenseApp.setDifficulty(1));
-        RadioButton hard = new RadioButton("hard");
+        RadioButton hard = new RadioButton("HARD");
         hard.setToggleGroup(difficulty);
         hard.setOnAction((ActionEvent action) -> TowerDefenseApp.setDifficulty(2));
 
-        VBox gameDifficulty = new VBox();
+        VBox gameDifficulty = new VBox(15);
         gameDifficulty.getChildren().addAll(easy, medium, hard);
-
         var startButton = new CornTDButton("Start", this::fireNewGame);
 
         VBox vbox = new VBox(50);
         vbox.getChildren().addAll(gameDifficulty, startButton);
         vbox.setTranslateX(FXGL.getAppWidth() / 2);
         vbox.setTranslateY(FXGL.getAppHeight() / 2 - 20);
-
+        vbox.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
         getContentRoot().getChildren().add(vbox);
     }
 

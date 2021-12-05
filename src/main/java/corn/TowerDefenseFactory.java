@@ -84,21 +84,28 @@ public class TowerDefenseFactory implements EntityFactory {
 
     @Spawns("boss")
     public Entity spawnBoss(SpawnData data) throws FileNotFoundException {
+        FileInputStream temp1 = new
+                FileInputStream("./src/main/resources/assets/textures/umich.png");
+        ImageView image1 = new ImageView(new Image(temp1));
+        image1.preserveRatioProperty();
+        image1.setFitWidth(60);
+        image1.setFitHeight(47);
+
         var hp = new HealthIntComponent(25);
         var hpView = new ProgressBar(false);
         hpView.setFill(Color.LIGHTGREEN);
         hpView.setMaxValue(25);
-        hpView.setWidth(50);
-        hpView.setTranslateY(-30);
-        hpView.setTranslateX(-25);
+        hpView.setWidth(60);
+        hpView.setTranslateY(-20);
+        // hpView.setTranslateX(-10);
         hpView.currentValueProperty().bind(hp.valueProperty());
         return FXGL.entityBuilder(data)
                 .type(TowerDefenseType.ENEMY)
-                .viewWithBBox(new Circle(33, Color.BLACK))
+                .viewWithBBox(image1)
                 .with(new CollidableComponent(true))
                 .view(hpView)
                 .with(hp)
-                .with(new Enemy3())
+                .with(new Boss())
                 .build();
     }
 
@@ -199,7 +206,7 @@ public class TowerDefenseFactory implements EntityFactory {
         ImageView image3 = new ImageView(new Image(temp3));
         image3.preserveRatioProperty();
         image3.setFitWidth(70);
-        image3.setFitHeight(70);
+        image3.setFitHeight(75);
 
         return FXGL.entityBuilder(data)
                 .type(TowerDefenseType.TOWER)

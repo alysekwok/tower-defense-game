@@ -187,11 +187,6 @@ public class TowerDefenseApp extends GameApplication {
     @Override
     public void initGame() {
         getGameWorld().addEntityFactory(new TowerDefenseFactory());
-        // getAssetLoader().loadJSON("json/map-5.json", TiledMap.class);
-        // setLevelFromMap("map-5.json");
-        // setLevelFromMap("map-5.tmx");
-        // getGameWorld().setLevel(level);
-        // FXGL.setLevelFromMap("map-5.tmx");
         Texture t = getAssetLoader().loadTexture("map-menu.png");
 
         entityBuilder()
@@ -450,8 +445,6 @@ public class TowerDefenseApp extends GameApplication {
 
     }
 
-
-
     private void onEnemyKilled(EnemyKilledEvent event) {
         Entity enemy = event.getEnemy();
         Point2D position = enemy.getPosition();
@@ -469,7 +462,7 @@ public class TowerDefenseApp extends GameApplication {
             gameOver(true);
         }
     }
-    
+
     private void gameOver(boolean won) {
         getGameController().pauseEngine();
         if (won) {
