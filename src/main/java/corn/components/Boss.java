@@ -8,12 +8,26 @@ import javafx.geometry.Point2D;
 
 import java.util.List;
 
-public class boss extends Component {
+public class Boss extends Component {
     private List<Point2D> waypoints;
     private Point2D nextWaypoint;
     private MonumentComponent monument = new MonumentComponent();
 
     private double speed;
+
+    public boolean increaseSpeed() {
+        return true;
+    }
+
+    public boolean update(double tpf) {
+        return true;
+    }
+
+    public boolean exists() {
+        return true;
+    }
+
+    public Boss() { };
 
     @Override
     public void onAdded() {

@@ -3,7 +3,6 @@ package corn;
 import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
-import com.almasb.fxgl.app.scene.GameScene;
 import com.almasb.fxgl.app.scene.GameView;
 import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.entity.Entity;
@@ -62,38 +61,47 @@ public class TowerDefenseApp extends GameApplication {
 
 
     public List<Point2D> getWaypoints() {
+
         return new ArrayList<>(waypoints);
     }
 
     public static int getMon() {
+
         return mon;
     }
 
     public static int getLevelEnemies() {
+
         return levelEnemies;
     }
 
     public static int getTotalEnemies() {
+
         return totalEnemies;
     }
 
     public Point2D getEnemySpawnPoint() {
+
         return enemySpawnPoint;
     }
 
     public Map<String, Object> getValues() {
+
         return values;
     }
 
     public static int getMaxEnemies() {
+
         return MAX_ENEMIES;
     }
 
     public Color getSelectedColor() {
+
         return selectedColor;
     }
 
     public int getSelectedIndex() {
+
         return selectedIndex;
     }
 
@@ -105,10 +113,33 @@ public class TowerDefenseApp extends GameApplication {
         return selectedText;
     }
 
-    public void incrementBullet() {bulletsShot++;}
+    public void incrementBullet() {
+        bulletsShot++;
+    }
 
-    public void increaseMoneySpent(int amount) {moneySpent += amount;}
+    public void increaseMoneySpent(int amount) {
+        moneySpent += amount;
+    }
 
+    public static int getKilledEnemies() {
+        return 1;
+    }
+
+    public static int getShotBullets() {
+        return 1;
+    }
+
+    public static int getSpentMoney() {
+        return 1;
+    }
+
+    public boolean restart() {
+        return true;
+    }
+
+    public boolean exit() {
+        return true;
+    }
 
     @Override
     public void initSettings(GameSettings settings) {
@@ -305,6 +336,7 @@ public class TowerDefenseApp extends GameApplication {
 
         }
     }
+
     private void spawnEnemy2() {
         inc("numEnemies", -1);
         totalEnemies--;
@@ -437,16 +469,19 @@ public class TowerDefenseApp extends GameApplication {
             gameOver(true);
         }
     }
-
-
+    
     private void gameOver(boolean won) {
         getGameController().pauseEngine();
         if (won) {
-            showMessage("Congrats! You won!" + "\nStatistics:\nEnemies Killed: " + enemiesKilled + "\nBullets Shot:"
-                    + bulletsShot + "\nMoney Spent: " + moneySpent);
+            showMessage("Congrats! You won!" + "\nStatistics:\nEnemies Killed: "
+                    + enemiesKilled + "\nBullets Shot:"
+                    + bulletsShot + "\nMoney Spent: "
+                    + moneySpent);
         } else {
-            showMessage("You lost. Better luck next time!" + "\nStatistics:\nEnemies Killed: " + enemiesKilled + "\nBullets Shot:"
-                    + bulletsShot + "\nMoney Spent: " + moneySpent);
+            showMessage("You lost. Better luck next time!" + "\nStatistics:\nEnemies Killed: "
+                    + enemiesKilled + "\nBullets Shot:"
+                    + bulletsShot + "\nMoney Spent: "
+                    + moneySpent);
         }
         CornTDButton restart = new CornTDButton("Restart", getGameController()::gotoMainMenu);
         restart.setTranslateX(FXGL.getAppWidth() / 2);
