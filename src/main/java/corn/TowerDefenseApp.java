@@ -16,6 +16,7 @@ import corn.collision.MonumentEnemyHandler;
 import corn.components.MonumentComponent;
 import corn.event.EnemyKilledEvent;
 import corn.event.EnemyReachedGoalEvent;
+import corn.tower.TowerDataComponent;
 import corn.tower.TowerIcon;
 import corn.tower.TowerType;
 import javafx.beans.binding.Bindings;
@@ -55,6 +56,10 @@ public class TowerDefenseApp extends GameApplication {
     private TowerType selectedType = TowerType.FARMER;
     private String selectedText;
     private MonumentComponent monument = new MonumentComponent();
+    private boolean upgradeBomber = false;
+    private boolean upgradeFarmer = false;
+    private boolean upgradeNinja = false;
+
 
     public List<Point2D> getWaypoints() {
         return new ArrayList<>(waypoints);
@@ -239,9 +244,13 @@ public class TowerDefenseApp extends GameApplication {
         var cow = FXGL.getAssetLoader().loadTexture("cow.PNG", 130, 130);
         cow.setTranslateX(1150);
         cow.setTranslateY(600);
+
+
         var bomber = FXGL.getAssetLoader().loadTexture("bomber.PNG", 80, 80);
         bomber.setTranslateX(1150);
         bomber.setTranslateY(120);
+
+
         var farmer = FXGL.getAssetLoader().loadTexture("farmer.PNG", 80, 80);
         farmer.setTranslateX(1150);
         farmer.setTranslateY(220);
@@ -273,6 +282,19 @@ public class TowerDefenseApp extends GameApplication {
         startButton.setTranslateX(100);
         startButton.setTranslateY(25);
         getGameScene().addUINode(startButton);
+
+        SmallCornTDButton upgrade1 = new SmallCornTDButton("Upgrade",this::upgradeTower1 );
+        upgrade1.setTranslateX(1250);
+        upgrade1.setTranslateY(170);
+        SmallCornTDButton upgrade2 = new SmallCornTDButton("Upgrade",this::upgradeTower2 );
+        upgrade2.setTranslateX(1250);
+        upgrade2.setTranslateY(270);
+        SmallCornTDButton upgrade3 = new SmallCornTDButton("Upgrade",this::upgradeTower3 );
+        upgrade3.setTranslateX(1250);
+        upgrade3.setTranslateY(370);
+        getGameScene().addUINodes(upgrade1, upgrade2, upgrade3);
+
+
     }
 
     private void spawnEnemy() {
@@ -314,35 +336,89 @@ public class TowerDefenseApp extends GameApplication {
 
     private void placeTower() {
         if (selectedColor == Color.PURPLE && ((int) values.get("money") >= 30)) {
-            values.replace("money", (int) values.get("money") - 30);
-            spawn("TowerBomber",
-                    new SpawnData(getInput().getMouseXWorld(), getInput().getMouseYWorld())
-                            .put("color", selectedColor)
-                            // .put("type", selectedType)
-                            .put("index", selectedIndex)
-            );
+            if (!upgradeBomber) {
+                values.replace("money", (int) values.get("money") - 30);
+                spawn("TowerBomber",
+                        new SpawnData(getInput().getMouseXWorld(), getInput().getMouseYWorld())
+                                .put("color", selectedColor)
+                                // .put("type", selectedType)
+                                .put("index", selectedIndex)
+                );
+            } else {
+                values.replace("money", (int) values.get("money") - 30);
+                spawn("UpgradeTowerBomber",
+                        new SpawnData(getInput().getMouseXWorld(), getInput().getMouseYWorld())
+                                .put("color", selectedColor)
+                                // .put("type", selectedType)
+                                .put("index", selectedIndex)
+                );
+
+            }
+
         }
         if (selectedColor == Color.LIGHTGREEN && ((int) values.get("money") >= 10)) {
-            values.replace("money", (int) values.get("money") - 10);
-            //System.out.println(values.get("money"));
-            spawn("TowerFarmer",
-                    new SpawnData(getInput().getMouseXWorld(), getInput().getMouseYWorld())
-                            .put("color", selectedColor)
-                            // .put("type", selectedType)
-                            .put("index", selectedIndex)
-            );
+            if (!upgradeFarmer) {
+                values.replace("money", (int) values.get("money") - 10);
+                //System.out.println(values.get("money"));
+                spawn("TowerFarmer",
+                        new SpawnData(getInput().getMouseXWorld(), getInput().getMouseYWorld())
+                                .put("color", selectedColor)
+                                // .put("type", selectedType)
+                                .put("index", selectedIndex)
+                );
+            } else {
+                values.replace("money", (int) values.get("money") - 10);
+                //System.out.println(values.get("money"));
+                spawn("UpgradeTowerFarmer",
+                        new SpawnData(getInput().getMouseXWorld(), getInput().getMouseYWorld())
+                                .put("color", selectedColor)
+                                // .put("type", selectedType)
+                                .put("index", selectedIndex)
+                );
+            }
+
         }
         if (selectedColor == Color.LIGHTPINK && ((int) values.get("money") >= 50)) {
-            values.replace("money", (int) values.get("money") - 50);
-            //System.out.println(values.get("money"));
-            spawn("TowerNinja",
-                    new SpawnData(getInput().getMouseXWorld(), getInput().getMouseYWorld())
-                            .put("color", selectedColor)
-                            // .put("type", selectedType)
-                            .put("index", selectedIndex)
-            );
+            if (!upgradeNinja) {
+                values.replace("money", (int) values.get("money") - 50);
+                //System.out.println(values.get("money"));
+                spawn("TowerNinja",
+                        new SpawnData(getInput().getMouseXWorld(), getInput().getMouseYWorld())
+                                .put("color", selectedColor)
+                                // .put("type", selectedType)
+                                .put("index", selectedIndex)
+                );
+            } else {
+                values.replace("money", (int) values.get("money") - 50);
+                //System.out.println(values.get("money"));
+                spawn("UpgradeTowerNinja",
+                        new SpawnData(getInput().getMouseXWorld(), getInput().getMouseYWorld())
+                                .put("color", selectedColor)
+                                // .put("type", selectedType)
+                                .put("index", selectedIndex)
+                );
+            }
+
         }
     }
+
+    private void upgradeTower1() {
+        values.replace("money", (int) values.get("money") - 10);
+        upgradeBomber = true;
+
+    }
+    private void upgradeTower2() {
+        values.replace("money", (int) values.get("money") - 10);
+        upgradeFarmer = true;
+
+    }
+    private void upgradeTower3() {
+        values.replace("money", (int) values.get("money") - 10);
+        upgradeNinja = true;
+
+    }
+
+
 
     private void onEnemyKilled(EnemyKilledEvent event) {
         Entity enemy = event.getEnemy();
@@ -361,8 +437,6 @@ public class TowerDefenseApp extends GameApplication {
             gameOver(true);
         }
     }
-
-
 
 
     private void gameOver(boolean won) {
@@ -401,6 +475,22 @@ public class TowerDefenseApp extends GameApplication {
             var rect = new Rectangle(200, 40);
             rect.setStroke(Color.WHITE);
             var text = FXGL.getUIFactoryService().newText(name, Color.WHITE, 18);
+            rect.fillProperty().bind(
+                    Bindings.when(hoverProperty()).then(Color.WHITE).otherwise(Color.BLACK)
+            );
+            text.fillProperty().bind(
+                    Bindings.when(hoverProperty()).then(Color.BLACK).otherwise(Color.WHITE)
+            );
+            setOnMouseClicked(e -> action.run());
+            getChildren().addAll(rect, text);
+        }
+    }
+
+    private static class SmallCornTDButton extends StackPane {
+        public SmallCornTDButton(String name, Runnable action) {
+            var rect = new Rectangle(70, 20);
+            rect.setStroke(Color.WHITE);
+            var text = FXGL.getUIFactoryService().newText(name, Color.WHITE, 10);
             rect.fillProperty().bind(
                     Bindings.when(hoverProperty()).then(Color.WHITE).otherwise(Color.BLACK)
             );

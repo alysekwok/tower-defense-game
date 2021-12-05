@@ -115,7 +115,7 @@ public class TowerDefenseFactory implements EntityFactory {
                 .type(TowerDefenseType.TOWER)
                 .viewWithBBox((image1))
                 .with(new CollidableComponent(true))
-                .with(new TowerDataComponent(TowerType.BOMBER))
+                .with(new TowerDataComponent(TowerType.BOMBER, false))
                 .with(new TowerComponent(TowerType.BOMBER))
                 .build();
     }
@@ -133,7 +133,7 @@ public class TowerDefenseFactory implements EntityFactory {
                 .type(TowerDefenseType.TOWER)
                 .viewWithBBox((image2))
                 .with(new CollidableComponent(true))
-                .with(new TowerDataComponent(TowerType.FARMER))
+                .with(new TowerDataComponent(TowerType.FARMER, false))
                 .with(new TowerComponent(TowerType.FARMER))
                 .build();
     }
@@ -151,7 +151,61 @@ public class TowerDefenseFactory implements EntityFactory {
                 .type(TowerDefenseType.TOWER)
                 .viewWithBBox((image3))
                 .with(new CollidableComponent(true))
-                .with(new TowerDataComponent(TowerType.NINJA))
+                .with(new TowerDataComponent(TowerType.NINJA, false))
+                .with(new TowerComponent(TowerType.NINJA))
+                .build();
+    }
+
+    @Spawns("UpgradeTowerBomber")
+    public Entity spawnUpgradeTowerBomber(SpawnData data) throws FileNotFoundException {
+        FileInputStream temp1 = new
+                FileInputStream("./src/main/resources/assets/textures/upgradebomber.PNG");
+        ImageView image1 = new ImageView(new Image(temp1));
+        image1.preserveRatioProperty();
+        image1.setFitWidth(70);
+        image1.setFitHeight(70);
+
+        return FXGL.entityBuilder(data)
+                .type(TowerDefenseType.TOWER)
+                .viewWithBBox((image1))
+                .with(new CollidableComponent(true))
+                .with(new TowerDataComponent(TowerType.BOMBER, true))
+                .with(new TowerComponent(TowerType.BOMBER))
+                .build();
+    }
+
+    @Spawns("UpgradeTowerFarmer")
+    public Entity spawnUpgradeTowerFarmer(SpawnData data) throws FileNotFoundException {
+        FileInputStream temp2 = new
+                FileInputStream("./src/main/resources/assets/textures/upgradefarmer.PNG");
+        ImageView image2 = new ImageView(new Image(temp2));
+        image2.preserveRatioProperty();
+        image2.setFitWidth(70);
+        image2.setFitHeight(70);
+
+        return FXGL.entityBuilder(data)
+                .type(TowerDefenseType.TOWER)
+                .viewWithBBox((image2))
+                .with(new CollidableComponent(true))
+                .with(new TowerDataComponent(TowerType.FARMER, true))
+                .with(new TowerComponent(TowerType.FARMER))
+                .build();
+    }
+
+    @Spawns("UpgradeTowerNinja")
+    public Entity spawnUpgradeTowerNinja(SpawnData data) throws FileNotFoundException {
+        FileInputStream temp3 = new
+                FileInputStream("./src/main/resources/assets/textures/upgradeninja.PNG");
+        ImageView image3 = new ImageView(new Image(temp3));
+        image3.preserveRatioProperty();
+        image3.setFitWidth(70);
+        image3.setFitHeight(70);
+
+        return FXGL.entityBuilder(data)
+                .type(TowerDefenseType.TOWER)
+                .viewWithBBox((image3))
+                .with(new CollidableComponent(true))
+                .with(new TowerDataComponent(TowerType.NINJA, true))
                 .with(new TowerComponent(TowerType.NINJA))
                 .build();
     }
